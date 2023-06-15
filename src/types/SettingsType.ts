@@ -1,0 +1,46 @@
+export const settingsColorTypeKeys = [
+  "backgroundColor",
+  "secondaryColor",
+  "textColor",
+  "primaryColor",
+] as const
+
+export const settingsDateTypeKeys = ["downloadedAt"] as const
+
+export const settingsTypeKeys = [
+  ...settingsColorTypeKeys,
+  ...settingsDateTypeKeys,
+]
+
+export type SettingsColorTypeKeys = (typeof settingsColorTypeKeys)[number]
+export type SettingsDateTypeKeys = (typeof settingsDateTypeKeys)[number]
+export type SettingsTypeKeys = (typeof settingsTypeKeys)[number]
+
+export type SettingsColorType = {
+  [key in SettingsColorTypeKeys]: string
+}
+
+export type SettingsDateType = {
+  [key in SettingsDateTypeKeys]: string
+}
+
+export type SettingsType = SettingsColorType & SettingsDateType
+
+// ******************** default value ********************
+
+export const settingsDefaultColorValues: SettingsColorType = {
+  backgroundColor: "#DDDDDD",
+  secondaryColor: "#ffffff",
+  primaryColor: "#E6E6E6",
+  textColor: "#313131",
+}
+
+export const settingsDefaultDateValues: SettingsDateType = {
+  /** 最新ダウンロード日時 */
+  downloadedAt: "00000000000000000",
+}
+
+export const settingsDefaultValues: SettingsType = {
+  ...settingsDefaultColorValues,
+  ...settingsDefaultDateValues,
+}

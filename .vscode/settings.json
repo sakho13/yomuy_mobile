@@ -1,0 +1,27 @@
+{
+  "editor.formatOnSave": true,
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true,
+    "source.addMissingImports": true
+  },
+  "cSpell.words": [
+    "allcount",
+    "biggenre",
+    "conv",
+    "gensaku",
+    "hyoka",
+    "isbl",
+    "isgl",
+    "isstop",
+    "istenni",
+    "istensei",
+    "iszankoku",
+    "kaiwaritu",
+    "lastup",
+    "ncode",
+    "novelupdated",
+    "sasie",
+    "userid",
+    "yomuy"
+  ]
+}
