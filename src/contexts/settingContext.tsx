@@ -15,11 +15,19 @@ export const setSecondaryColorContext = createContext<
   Dispatch<SetStateAction<string>>
 >(() => undefined)
 
+export const borderColorContext = createContext("")
+export const setBorderColorContext = createContext<
+  Dispatch<SetStateAction<string>>
+>(() => undefined)
+
 export const useBackgroundColorValue = () => useContext(backgroundColorContext)
 export const useBackgroundColorSet = () => useContext(setBackgroundColorContext)
 
 export const useSecondaryColorValue = () => useContext(secondaryColorContext)
 export const useSecondaryColorSet = () => useContext(setSecondaryColorContext)
+
+export const useBorderColorValue = () => useContext(borderColorContext)
+export const useBorderColorSet = () => useContext(setBorderColorContext)
 
 export const SettingContext: React.FC<{ children: React.ReactNode }> = ({
   children,
@@ -30,6 +38,7 @@ export const SettingContext: React.FC<{ children: React.ReactNode }> = ({
 
   const [bgc, setBgc] = useState("#ffffff")
   const [scc, setScc] = useState("#ffffff")
+  const [bor, setBor] = useState("#ffffff")
 
   useEffect(() => {
     settingsController
@@ -37,6 +46,7 @@ export const SettingContext: React.FC<{ children: React.ReactNode }> = ({
       .then(() => {
         setBgc(settingsController.getValue("backgroundColor"))
         setScc(settingsController.getValue("secondaryColor"))
+        setBor(settingsController.getValue("borderColor"))
       })
       .finally(() => {
         setIdLoading(false)
@@ -51,6 +61,11 @@ export const SettingContext: React.FC<{ children: React.ReactNode }> = ({
   const changeSCC = (val: string) => {
     setScc(val)
     if (isColorText(val)) settingsController.updateValue("secondaryColor", val)
+  }
+
+  const changeBor = (val: string) => {
+    setBor(val)
+    if (isColorText(val)) settingsController.updateValue("borderColor", val)
   }
 
   // ********************* VIEW *********************
@@ -71,7 +86,13 @@ export const SettingContext: React.FC<{ children: React.ReactNode }> = ({
           <setSecondaryColorContext.Provider
             value={(v) => changeSCC(v.toString())}
           >
-            {children}
+            <borderColorContext.Provider value={bor}>
+              <setBorderColorContext.Provider
+                value={(v) => changeBor(v.toString())}
+              >
+                {children}
+              </setBorderColorContext.Provider>
+            </borderColorContext.Provider>
           </setSecondaryColorContext.Provider>
         </secondaryColorContext.Provider>
       </setBackgroundColorContext.Provider>
