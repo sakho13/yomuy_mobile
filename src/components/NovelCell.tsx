@@ -1,8 +1,6 @@
 import { StyleSheet, Text, View } from "react-native"
 import { DownloadedNovelInfo } from "../types/Yomuy"
 import { CommonDate } from "../classes/CommonDate"
-import { useContext } from "react"
-import { SettingContext } from "../../App"
 
 type Props = {
   novel: DownloadedNovelInfo
