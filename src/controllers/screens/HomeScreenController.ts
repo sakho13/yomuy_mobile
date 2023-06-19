@@ -15,17 +15,27 @@ export const homeScreenController = () => {
         return {
           ncode: `${i}`,
           title: `title ${i}: こんなかんじでタイトルが入るよ`,
+          authorId: "",
+          authorName: "",
+          story: "",
+          bigGenre: 1,
+          genre: 101,
+          keyword: "",
+          firstUpAt: 0,
+          lastUpAt: 0,
+          novelType: 1,
+          isEnd: 1,
           downloadedAt: now.getByNumber,
-        }
+        } as DownloadedNovelInfo
       })
       setNovels([
         ...fetched,
-        {
-          ncode: "long",
-          title:
-            "とても長いしょうせつのタイトルです。高さを上手く調整しましょう！",
-          downloadedAt: now.getByNumber,
-        },
+        // {
+        //   ncode: "long",
+        //   title:
+        //     "とても長いしょうせつのタイトルです。高さを上手く調整しましょう！",
+        //   downloadedAt: now.getByNumber,
+        // } as DownloadedNovelInfo,
       ])
     }, []),
   )

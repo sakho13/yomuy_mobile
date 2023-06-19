@@ -6,7 +6,7 @@ import { StyleSheet, Text, View } from "react-native"
 import { DrawerNavigationTypes } from "./src/types/NavigationTypes"
 import HomeScreen from "./src/screens/HomeScreen"
 import SearchScreen from "./src/screens/SearchScreen"
-import FaIcon from "./src/components/FaIcon"
+import FaIcon from "./src/components/atoms/FaIcon"
 import SettingScreen from "./src/screens/SettingScreen"
 import { SettingContext } from "./src/contexts/settingContext"
 
