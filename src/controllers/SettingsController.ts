@@ -23,10 +23,18 @@ export class SettingsController {
     return this.settings[key]
   }
 
+  public get getValues() {
+    return this.settings
+  }
+
   public async updateValue(key: SettingsTypeKeys, value: string) {
     console.log("> update:", key, value)
     await AsyncStorage.setItem(key, value)
     this.settings[key] = value
+  }
+
+  public async reset() {
+    await AsyncStorage.multiRemove(settingsTypeKeys)
   }
 
   private isSettingsTypeKey(x: string): x is SettingsTypeKeys {

@@ -1,6 +1,7 @@
 export const settingsColorTypeKeys = [
   "backgroundColor",
   "secondaryColor",
+  "borderColor",
   "textColor",
   "primaryColor",
 ] as const
@@ -29,8 +30,9 @@ export type SettingsType = SettingsColorType & SettingsDateType
 // ******************** default value ********************
 
 export const settingsDefaultColorValues: SettingsColorType = {
-  backgroundColor: "#DDDDDD",
+  backgroundColor: "#ECECEC",
   secondaryColor: "#ffffff",
+  borderColor: "#BCBCBC",
   primaryColor: "#E6E6E6",
   textColor: "#313131",
 }

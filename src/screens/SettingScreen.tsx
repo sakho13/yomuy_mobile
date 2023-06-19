@@ -1,40 +1,38 @@
 import { View, Text, StyleSheet, TextInput } from "react-native"
 import { SettingScreenProps } from "../types/ScreenPropsTypes"
-import {
-  setBackgroundColorContext,
-  useBackgroundColorSet,
-  useBackgroundColorValue,
-} from "../contexts/settingContext"
+import { useSettingsValue, useSettingsSet } from "../contexts/settingContext"
 import { useCallback, useContext, useState } from "react"
+import { useFocusEffect } from "@react-navigation/native"
+import { SettingScreenController } from "../controllers/screens/SettingScreenController"
 
 const SettingScreen: React.FC<SettingScreenProps> = ({}) => {
-  const backgroundColor = useBackgroundColorValue()
-  const setBackgroundColor = useBackgroundColorSet()
+  const { localSettings, initLocalSetting, changeBackgroundColor } =
+    SettingScreenController()
 
-  const [nBackgroundColor, setNBackgroundColor] = useState(backgroundColor)
-  const changeBackgroundColor = (val: string) => {
-    setNBackgroundColor(val)
-    setBackgroundColor(val)
-  }
+  useFocusEffect(
+    useCallback(() => {
+      initLocalSetting()
+    }, []),
+  )
 
   return (
     <View style={styles.container}>
       <View style={styles.row}>
         <Text style={styles.label}>state val</Text>
-        <Text style={styles.value}>{nBackgroundColor}</Text>
+        <Text style={styles.value}>{localSettings.backgroundColor}</Text>
       </View>
 
-      <View style={styles.row}>
+      {/* <View style={styles.row}>
         <Text style={styles.label}>context val</Text>
-        <Text style={styles.value}>{backgroundColor}</Text>
-      </View>
+        <Text style={styles.value}>{settings.backgroundColor}</Text>
+      </View> */}
 
       <View style={styles.row}>
         <Text style={styles.label}>setting</Text>
         <TextInput
           style={styles.value}
           onChangeText={(text) => changeBackgroundColor(text)}
-          value={nBackgroundColor}
+          value={localSettings.backgroundColor}
         ></TextInput>
       </View>
     </View>
