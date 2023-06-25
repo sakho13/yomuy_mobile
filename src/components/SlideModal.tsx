@@ -7,6 +7,7 @@ type Props = {
   children: React.ReactNode
   head: string
   onClose: () => void
+  bgTouchable?: boolean
 }
 
 const SlideModal: React.FC<Props> = ({
@@ -14,6 +15,7 @@ const SlideModal: React.FC<Props> = ({
   head,
   onClose,
   children,
+  bgTouchable,
 }) => {
   const { backgroundColor, textColor } = useSettingsValue()
 
@@ -22,6 +24,7 @@ const SlideModal: React.FC<Props> = ({
       isVisible={isVisible}
       onSwipeComplete={onClose}
       swipeDirection={"down"}
+      onBackdropPress={bgTouchable ? onClose : undefined}
     >
       <View
         style={{ backgroundColor, paddingHorizontal: 12, paddingVertical: 16 }}
