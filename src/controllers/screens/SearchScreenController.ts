@@ -12,33 +12,35 @@ export const searchScreenController = () => {
 
   const [openingSearchModal, setOpeningSearchModal] = useState(false)
 
-  // const [openingNovelModal, setOpeningNovelModal] = useState(false)
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null)
 
   const [hitCount, setHitCount] = useState(0)
 
   const [searchItems, setSearchItems] = useState<NarouAPIInput>({
-    word: "本好き",
+    word: "",
   })
 
-  const [novels, setNovels] = useState<NarouAPINovelPart[]>([
-    // { title: "これがタイトル" },
-    // {
-    //   title:
-    //     "これがタイトルよ。長めのタイトルはちゃんと折り返して高さも調節できるようにしましょう",
-    // },
-  ] as NarouAPINovelPart[])
+  const [novels, setNovels] = useState<NarouAPINovelPart[]>([])
 
   const narouApiController = new NarouApiController()
 
+  /**
+   * 初期化処理
+   */
   const initState = () => {
     setNovels([])
   }
 
+  /**
+   * 検索モーダルの開閉
+   */
   const toggleSearchModal = () => {
     setOpeningSearchModal(!openingSearchModal)
   }
 
+  /**
+   * 検索モーダルを強制で閉じる
+   */
   const closeSearchModal = () => setOpeningSearchModal(false)
 
   /**
@@ -66,8 +68,6 @@ export const searchScreenController = () => {
     if (fetchingMore) return
     setFetchingMore(true)
 
-    console.log(hitCount, novels.length)
-
     const { novels: fetches } = await narouApiController.fetch(
       searchItems,
       novels.length + 1,
@@ -77,16 +77,28 @@ export const searchScreenController = () => {
     setFetchingMore(false)
   }
 
+  /**
+   * 小説詳細モーダルを開く
+   */
   const onTappedNovel = (index: number) => {
     setSelectedIndex(selectedIndex !== null ? null : index)
   }
 
+  /**
+   * 小説詳細モーダルを閉じる
+   */
   const closeNovelDetailModal = () => setSelectedIndex(null)
 
+  /**
+   * 本棚に登録する
+   */
   const addBookShelf = (novel: NarouAPINovelPart) => {
     console.log(novel)
   }
 
+  /**
+   * 検索単語の更新
+   */
   const changeWord = (text: string) => {
     setSearchItems({ ...searchItems, word: text })
   }
