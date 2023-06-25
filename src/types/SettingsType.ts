@@ -33,7 +33,7 @@ export const settingsDefaultColorValues: SettingsColorType = {
   backgroundColor: "#ECECEC",
   secondaryColor: "#ffffff",
   borderColor: "#BCBCBC",
-  primaryColor: "#E6E6E6",
+  primaryColor: "#0098C7",
   textColor: "#313131",
 }
 
