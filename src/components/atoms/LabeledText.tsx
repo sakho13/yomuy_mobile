@@ -1,4 +1,4 @@
-import { Text, TextStyle } from "react-native"
+import { Text, TextStyle, View } from "react-native"
 import { useSettingsValue } from "../../contexts/settingContext"
 import { StyleProp } from "react-native"
 
@@ -11,13 +11,18 @@ type Props = {
 const LabeledText: React.FC<Props> = ({ label, text, custom }) => {
   const { textColor } = useSettingsValue()
 
-  const textStyle = { color: textColor, width: "100%" }
+  const textStyle: StyleProp<TextStyle> = {
+    color: textColor,
+    width: "100%",
+    display: "flex",
+    flexDirection: "row",
+  }
 
   return (
-    <Text style={custom ? { ...textStyle } : textStyle}>
-      <span style={{ fontWeight: "bold" }}>{label}: </span>
-      {text}
-    </Text>
+    <View style={custom ? { ...textStyle } : textStyle}>
+      <Text style={{ fontWeight: "600" }}>{label}: </Text>
+      <Text style={{ color: textColor }}>{text}</Text>
+    </View>
   )
 }
 
