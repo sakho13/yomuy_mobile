@@ -21,7 +21,7 @@ export default function App() {
             name='HomeScreen'
             component={HomeScreen}
             options={{
-              title: "小説",
+              title: "本棚",
               drawerIcon({ color, size }) {
                 return <FaIcon name='home' size={size} color={color} />
               },
