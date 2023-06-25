@@ -5,23 +5,23 @@ import { StyleProp } from "react-native"
 type Props = {
   label: string
   text: string
-  custom?: StyleProp<TextStyle>
+  textCustom?: TextStyle
 }
 
-const LabeledText: React.FC<Props> = ({ label, text, custom }) => {
+const LabeledText: React.FC<Props> = ({ label, text, textCustom }) => {
   const { textColor } = useSettingsValue()
 
-  const textStyle: StyleProp<TextStyle> = {
-    color: textColor,
-    width: "100%",
-    display: "flex",
-    flexDirection: "row",
-  }
+  const labelStyle: StyleProp<TextStyle> = { fontWeight: "600", marginRight: 4 }
+  const textStyle: StyleProp<TextStyle> = { color: textColor, fontSize: 14 }
 
   return (
-    <View style={custom ? { ...textStyle } : textStyle}>
-      <Text style={{ fontWeight: "600" }}>{label}: </Text>
-      <Text style={{ color: textColor }}>{text}</Text>
+    <View style={{ width: "100%", display: "flex", flexDirection: "row" }}>
+      <Text style={textCustom ? { ...textCustom, ...labelStyle } : labelStyle}>
+        {label}:
+      </Text>
+      <Text style={textCustom ? { ...textCustom, ...textStyle } : textStyle}>
+        {text}
+      </Text>
     </View>
   )
 }
