@@ -1,16 +1,27 @@
 import { Pressable, StyleSheet, Text, View } from "react-native"
-import { CommonDate } from "../classes/CommonDate"
 import { useSettingsValue } from "../contexts/settingContext"
-import { useContext } from "react"
-import { NarouAPINovelPart } from "../types/Narou"
-import FaIcon from "./atoms/FaIcon"
+import { PureComponent, ReactNode, useContext } from "react"
+import { NarouAPINovelPart, bigGenre, genre } from "../types/Narou"
+import { convStrDate2Formatted } from "../functions/commonFunctions"
+import LabeledText from "./atoms/LabeledText"
 
 type Props = {
   novel: NarouAPINovelPart
   onTap: () => void
 }
 
-const SearchNovelCell: React.FC<Props> = ({ novel, onTap }) => {
+/**
+ * 検索結果表示（1要素）
+ */
+class SearchNovelCell extends PureComponent<Props> {
+  render(): ReactNode {
+    return (
+      <SearchNovelCellMain novel={this.props.novel} onTap={this.props.onTap} />
+    )
+  }
+}
+
+const SearchNovelCellMain: React.FC<Props> = ({ novel, onTap }) => {
   const { backgroundColor, borderColor } = useSettingsValue()
 
   return (
@@ -29,16 +40,15 @@ const SearchNovelCell: React.FC<Props> = ({ novel, onTap }) => {
         <Text style={styles.title}>{novel.title}</Text>
 
         <View style={styles.details}>
-          <Text>ジャンル</Text>
-          <Text>ジャンル</Text>
+          <LabeledText
+            label='最新投稿日'
+            text={convStrDate2Formatted(novel.general_lastup)}
+          />
+          <LabeledText label='作者' text={novel.writer} />
+          <LabeledText label='大ジャンル' text={bigGenre[novel.biggenre]} />
+          <LabeledText label='ジャンル' text={genre[novel.genre]} />
         </View>
       </View>
-
-      {/* <View style={styles.rightInfo}>
-        <Pressable>
-          <Text style={{ fontSize: 24 }}>︙</Text>
-        </Pressable>
-      </View> */}
     </Pressable>
   )
 }
@@ -51,16 +61,12 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     paddingVertical: 4,
   },
-  // checkboxContainer: {
-  //   alignItems: "center",
-  //   justifyContent: "center",
-  // },
   info: {
-    // paddingVertical: 4,
+    paddingHorizontal: 4,
   },
 
   title: {
-    fontSize: 16,
+    fontSize: 17,
     fontWeight: "bold",
   },
 
