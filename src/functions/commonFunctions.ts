@@ -1,3 +1,6 @@
+/**
+ * ゼロでオフセットする
+ */
 export function zeroOffset(num: number, len: number): string {
   const str = String(num)
   if (str.length >= len) return `${num}`
@@ -6,6 +9,9 @@ export function zeroOffset(num: number, len: number): string {
   return (zeros.join("") + str).slice(-len)
 }
 
+/**
+ * カラーコードのフォーマットである
+ */
 export function isColorText(text: string): text is string {
   if (text[0] !== "#") return false
   if (!(text.length === 7 || text.length === 9)) return false
@@ -39,4 +45,14 @@ export function isColorText(text: string): text is string {
   for (const c of colorCell) if (!codes.includes(c)) return false
 
   return true
+}
+
+/**
+ * 9999-12-31 24:59:59 を 9999年12月31日 24時59分 形式に変換する
+ */
+export function convStrDate2Formatted(dateStr: string) {
+  const date = dateStr.split(" ")
+  const [yyyy, mm, dd] = date[0].split("-")
+  const [hh, mi, _ss] = date[1].split(":")
+  return `${yyyy}年${mm}月${dd}日 ${hh}時${mi}分`
 }
