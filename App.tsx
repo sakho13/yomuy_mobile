@@ -1,8 +1,6 @@
-import { NavigationContainer, useTheme } from "@react-navigation/native"
+import { NavigationContainer } from "@react-navigation/native"
 import { createDrawerNavigator } from "@react-navigation/drawer"
-import { StatusBar } from "expo-status-bar"
-import React, { useContext, useEffect } from "react"
-import { StyleSheet, Text, View } from "react-native"
+import React from "react"
 import { DrawerNavigationTypes } from "./src/types/NavigationTypes"
 import HomeScreen from "./src/screens/HomeScreen"
 import SearchScreen from "./src/screens/SearchScreen"
@@ -55,7 +53,3 @@ export default function App() {
     </SettingContext>
   )
 }
-
-const styles = StyleSheet.create({
-  container: {},
-})
