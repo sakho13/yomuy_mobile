@@ -5,10 +5,16 @@ import PlainTextButton from "./atoms/PlainTextButton"
 type Props = {
   novel: NarouAPINovelPart
   onTapClose: () => void
+  onTapTry: () => void
   onTapAdd: () => void
 }
 
-const NovelDetailMain: React.FC<Props> = ({ novel, onTapClose, onTapAdd }) => {
+const NovelDetailMain: React.FC<Props> = ({
+  novel,
+  onTapClose,
+  onTapTry,
+  onTapAdd,
+}) => {
   if (!novel)
     return (
       <View>
@@ -37,7 +43,7 @@ const NovelDetailMain: React.FC<Props> = ({ novel, onTapClose, onTapAdd }) => {
             gray={true}
             icon='times'
           />
-          <PlainTextButton text='試し読み' onTap={() => {}} icon='book-open' />
+          <PlainTextButton text='試し読み' onTap={onTapTry} icon='book-open' />
           <PlainTextButton text='追加' onTap={onTapAdd} icon='book' />
         </View>
       </View>

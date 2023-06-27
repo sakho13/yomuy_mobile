@@ -9,14 +9,14 @@ import { searchScreenController } from "../controllers/screens/SearchScreenContr
 import SearchNovelCell from "../components/SearchNovelCell"
 import FaIcon from "../components/atoms/FaIcon"
 import { useSettingsValue } from "../contexts/settingContext"
-import React, { useCallback, useState } from "react"
+import React, { useEffect, useState } from "react"
 import { SettingScreenProps } from "../types/ScreenPropsTypes"
 import SlideModal from "../components/SlideModal"
 import PlainTextInput from "../components/PlainTextInput"
-import { useFocusEffect } from "@react-navigation/native"
 import { FlatList } from "react-native"
 import PlainTextButton from "../components/atoms/PlainTextButton"
 import NovelDetailMain from "../components/NovelDetailMain"
+import { useNcodeSet } from "../contexts/novelContext"
 
 const SearchScreen: React.FC<SettingScreenProps> = () => {
   const {
@@ -39,16 +39,15 @@ const SearchScreen: React.FC<SettingScreenProps> = () => {
     addBookShelf,
   } = searchScreenController()
 
-  const { backgroundColor, borderColor, secondaryColor, textColor } =
-    useSettingsValue()
+  const setNcode = useNcodeSet()
 
-  const [tappedSearch, setTappedSearch] = useState(false)
+  const { backgroundColor, secondaryColor, textColor } = useSettingsValue()
 
-  useFocusEffect(
-    useCallback(() => {
-      initState()
-    }, []),
-  )
+  const [_tappedSearch, setTappedSearch] = useState(false)
+
+  useEffect(() => {
+    initState()
+  }, [])
 
   const novelList =
     novels.length === 0 ? (
@@ -114,6 +113,7 @@ const SearchScreen: React.FC<SettingScreenProps> = () => {
           <NovelDetailMain
             novel={novels[selectedIndex]}
             onTapClose={closeNovelDetailModal}
+            onTapTry={() => setNcode(novels[selectedIndex].ncode)}
             onTapAdd={() => addBookShelf(novels[selectedIndex])}
           />
         ) : (
@@ -137,7 +137,7 @@ const SearchScreen: React.FC<SettingScreenProps> = () => {
           />
         </View>
 
-        <PlainTextButton text='検索' onTap={search} />
+        <PlainTextButton text='検索' onTap={search} icon='search' />
       </SlideModal>
     </View>
   )
