@@ -1,4 +1,4 @@
-import { Pressable, Text } from "react-native"
+import { Pressable, Text, ViewStyle } from "react-native"
 import { useSettingsValue } from "../../contexts/settingContext"
 import FaIcon from "./FaIcon"
 
@@ -20,20 +20,28 @@ const PlainTextButton: React.FC<Props> = ({
 
   const contentColor = gray ? textColor : backgroundColor
 
+  const styleBGC = (pressed: boolean) => {
+    if (pressed) return gray ? "black" : borderColor
+    return gray ? borderColor : primaryColor
+  }
+
+  const styleBase: ViewStyle = {
+    marginHorizontal: 8,
+    marginTop: 8,
+    paddingVertical: 4,
+    paddingHorizontal: 8,
+    borderRadius: 8,
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+  }
+
   return (
     <Pressable
       onPress={onTap}
-      style={{
-        marginHorizontal: 8,
-        marginTop: 8,
-        backgroundColor: gray ? borderColor : primaryColor,
-        paddingVertical: 4,
-        paddingHorizontal: 8,
-        borderRadius: 8,
-        display: "flex",
-        flexDirection: "row",
-        alignItems: "center",
-        justifyContent: "center",
+      style={({ pressed }) => {
+        return { ...styleBase, backgroundColor: styleBGC(pressed) }
       }}
     >
       <Text
