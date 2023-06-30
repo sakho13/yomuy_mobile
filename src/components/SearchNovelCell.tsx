@@ -24,6 +24,15 @@ class SearchNovelCell extends PureComponent<Props> {
 const SearchNovelCellMain: React.FC<Props> = ({ novel, onTap }) => {
   const { backgroundColor, borderColor } = useSettingsValue()
 
+  const isTanpenOrKanketsu = novel.end === 0
+  const isTanpen = isTanpenOrKanketsu && novel.general_all_no === 1
+
+  const episodeTxt = isTanpen
+    ? "短編"
+    : isTanpenOrKanketsu
+    ? `${novel.general_all_no}話 完`
+    : `${novel.general_all_no}話`
+
   return (
     <Pressable
       style={(pressed) => {
@@ -42,7 +51,9 @@ const SearchNovelCellMain: React.FC<Props> = ({ novel, onTap }) => {
         <View style={styles.details}>
           <LabeledText
             label='最新投稿日'
-            text={convStrDate2Formatted(novel.general_lastup)}
+            text={`${convStrDate2Formatted(
+              novel.general_lastup,
+            )} (${episodeTxt})`}
           />
           <LabeledText label='作者' text={novel.writer} />
           <LabeledText label='大ジャンル' text={bigGenre[novel.biggenre]} />
