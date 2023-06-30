@@ -1,13 +1,6 @@
-import {
-  View,
-  StyleSheet,
-  Pressable,
-  Text,
-  ActivityIndicator,
-} from "react-native"
+import { View, StyleSheet, Text, ActivityIndicator } from "react-native"
 import { searchScreenController } from "../controllers/screens/SearchScreenController"
 import SearchNovelCell from "../components/SearchNovelCell"
-import FaIcon from "../components/atoms/FaIcon"
 import { useSettingsValue } from "../contexts/settingContext"
 import React, { useEffect, useState } from "react"
 import { SettingScreenProps } from "../types/ScreenPropsTypes"
@@ -17,6 +10,7 @@ import { FlatList } from "react-native"
 import PlainTextButton from "../components/atoms/PlainTextButton"
 import NovelDetailMain from "../components/NovelDetailMain"
 import { useNcodeSet } from "../contexts/novelContext"
+import IconFab from "../components/IconFab"
 
 const SearchScreen: React.FC<SettingScreenProps> = () => {
   const {
@@ -83,14 +77,8 @@ const SearchScreen: React.FC<SettingScreenProps> = () => {
       {isFetching ? <ActivityIndicator size={"large"} /> : novelList}
 
       {/* SearchButton FAB */}
-      <Pressable
-        style={({ pressed }) => {
-          return {
-            ...styles.fab,
-            backgroundColor: pressed ? backgroundColor : secondaryColor,
-            borderColor: textColor,
-          }
-        }}
+      <IconFab
+        icon='search'
         onPress={() => {
           setTappedSearch(true)
           toggleSearchModal()
@@ -98,9 +86,7 @@ const SearchScreen: React.FC<SettingScreenProps> = () => {
         onPressOut={() => {
           setTappedSearch(false)
         }}
-      >
-        <FaIcon name='search' size={40} color={textColor} />
-      </Pressable>
+      />
 
       {/* NovelDetailModal */}
       <SlideModal
@@ -147,20 +133,6 @@ const styles = StyleSheet.create({
   container: {
     // backgroundColor: "#B46060",
     ...StyleSheet.absoluteFillObject,
-  },
-
-  fab: {
-    zIndex: 10,
-    position: "absolute",
-    borderRadius: 10,
-    borderWidth: 2,
-    padding: 6,
-    bottom: "4%",
-    right: "4%",
-  },
-
-  fabTapped: {
-    opacity: 0.9,
   },
 })
 
