@@ -35,7 +35,7 @@ const SearchScreen: React.FC<SettingScreenProps> = () => {
 
   const setNcode = useNcodeSet()
 
-  const { backgroundColor, secondaryColor, textColor } = useSettingsValue()
+  const { backgroundColor } = useSettingsValue()
 
   const [_tappedSearch, setTappedSearch] = useState(false)
 
@@ -131,7 +131,6 @@ const SearchScreen: React.FC<SettingScreenProps> = () => {
 
 const styles = StyleSheet.create({
   container: {
-    // backgroundColor: "#B46060",
     ...StyleSheet.absoluteFillObject,
   },
 })
