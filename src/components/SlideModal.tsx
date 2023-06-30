@@ -33,7 +33,7 @@ const SlideModal: React.FC<Props> = ({
           {head}
         </Text>
 
-        {children}
+        <View style={{ marginTop: 8, marginHorizontal: 4 }}>{children}</View>
       </View>
     </Modal>
   )
