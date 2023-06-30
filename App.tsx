@@ -82,8 +82,16 @@ export default function App() {
             headerShown: false,
           }}
         />
-        <Stack.Screen name='EpisodeListScreen' component={EpisodeListScreen} />
-        <Stack.Screen name='EpisodeScreen' component={EpisodeScreen} />
+        <Stack.Screen
+          name='EpisodeListScreen'
+          options={{ title: "" }}
+          component={EpisodeListScreen}
+        />
+        <Stack.Screen
+          name='EpisodeScreen'
+          options={{ title: "" }}
+          component={EpisodeScreen}
+        />
       </Stack.Navigator>
     </AppWrapper>
   )
