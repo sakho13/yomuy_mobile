@@ -56,3 +56,13 @@ export function convStrDate2Formatted(dateStr: string) {
   const [hh, mi, _ss] = date[1].split(":")
   return `${yyyy}年${mm}月${dd}日 ${hh}時${mi}分`
 }
+
+/**
+ * テキストから 9999/12/31 24:59 部分を取得する
+ * @param text
+ */
+export function parseDateFormatText(text: string): string {
+  const reg = /\d{4}\/\d{2}\/\d{2} \d{2}:\d{2}/
+  const parsed = text.match(reg)
+  return parsed && parsed[0] ? parsed[0].trim() : ""
+}
