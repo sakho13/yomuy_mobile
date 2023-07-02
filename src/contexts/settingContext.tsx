@@ -26,7 +26,7 @@ export const settingsContext = createContext<
   borderColor: "",
 })
 export const setSettingsContext = createContext<
-  Dispatch<SetStateAction<SettingsType>>
+  (mode: "change" | "reset", value: SetStateAction<SettingsType>) => void
 >(() => undefined)
 
 export const useSettingsValue = () => useContext(settingsContext)
@@ -86,45 +86,60 @@ export const SettingContext: React.FC<{ children: React.ReactNode }> = ({
       })
   }
 
-  const changeSetting = (value: SetStateAction<SettingsType>) => {
-    const newVal = value as SettingsType
+  const changeSetting = (
+    mode: "change" | "reset",
+    value: SetStateAction<SettingsType>,
+  ) => {
+    if (mode === "reset") {
+      resetThemeSettings()
+    }
+    if (mode === "change") {
+      const newVal = value as SettingsType
 
-    // const changedTheme = newVal.theme !== settings.theme
+      // const changedTheme = newVal.theme !== settings.theme
 
-    // if (changedTheme) {
-    //   console.log("changedTheme")
-    //   const themeValues =
-    //     newVal.theme !== "dark"
-    //       ? settingsLightColorValues
-    //       : settingsDarkColorValues
-    //   setSetting({
-    //     ...settings,
-    //     ...themeValues,
-    //     theme: newVal.theme,
-    //   })
-    //   return
-    // }
+      // if (changedTheme) {
+      //   console.log("changedTheme")
+      //   const themeValues =
+      //     newVal.theme !== "dark"
+      //       ? settingsLightColorValues
+      //       : settingsDarkColorValues
+      //   setSetting({
+      //     ...settings,
+      //     ...themeValues,
+      //     theme: newVal.theme,
+      //   })
+      //   return
+      // }
 
-    // setSetting({
-    //   ...settings,
-    //   downloadedAt: newVal.downloadedAt,
-    // })
+      // setSetting({
+      //   ...settings,
+      //   downloadedAt: newVal.downloadedAt,
+      // })
+    }
   }
 
   const resetThemeSettings = async () => {
     setIsLoading(true)
-    await settingsController.reset()
+
+    try {
+      await settingsController.reset()
+    } catch (error) {
+      //
+    } finally {
+      // settingsController.getValues
+
+      setIsLoading(false)
+    }
   }
 
   const toggleTheme = async () => {
     const changed = theme === "dark" ? "light" : "dark"
-    console.log("feature value", changed)
 
     await settingsController.updateValue("theme", changed)
 
     const themeColors =
       changed === "dark" ? settingsDarkColorValues : settingsLightColorValues
-    console.log(themeColors.backgroundColor)
     setSetting({
       ...settings,
       ...themeColors,
