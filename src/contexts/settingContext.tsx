@@ -1,17 +1,29 @@
 import React, { useContext, useEffect, useState } from "react"
 import { createContext, Dispatch, SetStateAction } from "react"
-import { SettingsType } from "../types/SettingsType"
+import {
+  SettingsColorType,
+  SettingsDateType,
+  SettingsType,
+  settingsDarkColorValues,
+  settingsLightColorValues,
+} from "../types/SettingsType"
 import { ActivityIndicator, Button, StyleSheet, Text, View } from "react-native"
 import { SettingsController } from "../controllers/SettingsController"
-import { isColorText } from "../functions/commonFunctions"
 
-export const settingsContext = createContext<SettingsType>({
+export const themeContext = createContext<"dark" | "light">("dark")
+export const setThemeContext = createContext<() => void>(() => undefined)
+export const useThemeValue = () => useContext(themeContext)
+export const useThemeSet = () => useContext(setThemeContext)
+
+export const settingsContext = createContext<
+  SettingsColorType & SettingsDateType
+>({
+  downloadedAt: "",
   backgroundColor: "",
   secondaryColor: "",
   primaryColor: "",
-  borderColor: "",
   textColor: "",
-  downloadedAt: "",
+  borderColor: "",
 })
 export const setSettingsContext = createContext<
   Dispatch<SetStateAction<SettingsType>>
@@ -28,23 +40,22 @@ export const SettingContext: React.FC<{ children: React.ReactNode }> = ({
   const [isLoading, setIsLoading] = useState(true)
   const [hasFetchError, setHasFetchError] = useState(false)
 
-  const [settings, setSetting] = useState<SettingsType>({
-    backgroundColor: "#ffffff",
-    secondaryColor: "#ffffff",
-    primaryColor: "#ffffff",
-    borderColor: "#ffffff",
-    textColor: "#ffffff",
-    downloadedAt: "",
-  })
+  const [theme, setTheme] = useState<"dark" | "light">("dark")
+
+  const [settings, setSetting] = useState<SettingsColorType & SettingsDateType>(
+    {
+      backgroundColor: "",
+      secondaryColor: "",
+      primaryColor: "",
+      textColor: "",
+      borderColor: "",
+      downloadedAt: "",
+    },
+  )
 
   useEffect(() => {
     fetchSettings()
   }, [])
-
-  // const changeBGC = (val: string) => {
-  //   setBgc(val)
-  //   if (isColorText(val)) settingsController.updateValue("backgroundColor", val)
-  // }
 
   const fetchSettings = () => {
     setIsLoading(true)
@@ -52,7 +63,20 @@ export const SettingContext: React.FC<{ children: React.ReactNode }> = ({
     settingsController
       .initializer()
       .then(() => {
-        setSetting(settingsController.getValues)
+        const values = settingsController.getValues
+
+        const isLight = values.theme !== "dark"
+        setTheme(values.theme)
+
+        const themeValues = isLight
+          ? settingsLightColorValues
+          : settingsDarkColorValues
+
+        setSetting({
+          ...themeValues,
+          primaryColor: "#0098C7",
+          downloadedAt: values.downloadedAt,
+        })
       })
       .catch(() => {
         setHasFetchError(true)
@@ -64,16 +88,48 @@ export const SettingContext: React.FC<{ children: React.ReactNode }> = ({
 
   const changeSetting = (value: SetStateAction<SettingsType>) => {
     const newVal = value as SettingsType
-    for (const [k, v] of Object.entries(newVal)) {
-      // validation
-      if (k.includes("Color") && !isColorText(v)) return
-    }
-    setSetting(newVal)
+
+    // const changedTheme = newVal.theme !== settings.theme
+
+    // if (changedTheme) {
+    //   console.log("changedTheme")
+    //   const themeValues =
+    //     newVal.theme !== "dark"
+    //       ? settingsLightColorValues
+    //       : settingsDarkColorValues
+    //   setSetting({
+    //     ...settings,
+    //     ...themeValues,
+    //     theme: newVal.theme,
+    //   })
+    //   return
+    // }
+
+    // setSetting({
+    //   ...settings,
+    //   downloadedAt: newVal.downloadedAt,
+    // })
   }
 
   const resetThemeSettings = async () => {
     setIsLoading(true)
     await settingsController.reset()
+  }
+
+  const toggleTheme = async () => {
+    const changed = theme === "dark" ? "light" : "dark"
+    console.log("feature value", changed)
+
+    await settingsController.updateValue("theme", changed)
+
+    const themeColors =
+      changed === "dark" ? settingsDarkColorValues : settingsLightColorValues
+    console.log(themeColors.backgroundColor)
+    setSetting({
+      ...settings,
+      ...themeColors,
+    })
+    setTheme(changed)
   }
 
   // ********************* VIEW *********************
@@ -100,7 +156,11 @@ export const SettingContext: React.FC<{ children: React.ReactNode }> = ({
   return (
     <settingsContext.Provider value={settings}>
       <setSettingsContext.Provider value={changeSetting}>
-        {children}
+        <themeContext.Provider value={theme}>
+          <setThemeContext.Provider value={toggleTheme}>
+            {children}
+          </setThemeContext.Provider>
+        </themeContext.Provider>
       </setSettingsContext.Provider>
     </settingsContext.Provider>
   )

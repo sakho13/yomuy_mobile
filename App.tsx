@@ -10,10 +10,11 @@ import HomeScreen from "./src/screens/HomeScreen"
 import SearchScreen from "./src/screens/SearchScreen"
 import FaIcon from "./src/components/atoms/FaIcon"
 import SettingScreen from "./src/screens/SettingScreen"
-import { SettingContext } from "./src/contexts/settingContext"
+import { SettingContext, useSettingsValue } from "./src/contexts/settingContext"
 import { NovelContext } from "./src/contexts/novelContext"
 import EpisodeListScreen from "./src/screens/EpisodeListScreen"
 import EpisodeScreen from "./src/screens/EpisodeScreen"
+import PlainText from "./src/components/atoms/PlainText"
 
 const Drawer = createDrawerNavigator<DrawerNavigationTypes>()
 const Stack = createNativeStackNavigator<StackNavigationTypes>()
@@ -29,8 +30,17 @@ const AppWrapper: React.FC<{ children: React.ReactNode }> = ({ children }) => {
 }
 
 const Index: React.FC = () => {
+  const { secondaryColor } = useSettingsValue()
+
   return (
-    <Drawer.Navigator initialRouteName='SearchScreen'>
+    <Drawer.Navigator
+      initialRouteName='SearchScreen'
+      screenOptions={{
+        headerStyle: {
+          backgroundColor: secondaryColor,
+        },
+      }}
+    >
       <Drawer.Screen
         name='HomeScreen'
         component={HomeScreen}
@@ -38,9 +48,6 @@ const Index: React.FC = () => {
           title: "本棚",
           drawerIcon({ color, size }) {
             return <FaIcon name='home' size={size} color={color} />
-          },
-          headerStyle: {
-            // backgroundColor: getSetting("secondaryColor"),
           },
         }}
       />

@@ -1,12 +1,13 @@
-import { View, Text, StyleSheet, TextInput } from "react-native"
+import { View, StyleSheet, Switch, ActivityIndicator } from "react-native"
 import { SettingScreenProps } from "../types/ScreenPropsTypes"
-import { useSettingsValue, useSettingsSet } from "../contexts/settingContext"
-import { useCallback, useContext, useState } from "react"
+import { useCallback } from "react"
 import { useFocusEffect } from "@react-navigation/native"
 import { SettingScreenController } from "../controllers/screens/SettingScreenController"
+import PlainText from "../components/atoms/PlainText"
+import ScreenWrapper from "../components/atoms/ScreenWrapper"
 
 const SettingScreen: React.FC<SettingScreenProps> = ({}) => {
-  const { localSettings, initLocalSetting, changeBackgroundColor } =
+  const { theme, loading, initLocalSetting, toggleTheme } =
     SettingScreenController()
 
   useFocusEffect(
@@ -16,32 +17,30 @@ const SettingScreen: React.FC<SettingScreenProps> = ({}) => {
   )
 
   return (
-    <View style={styles.container}>
-      <View style={styles.row}>
-        <Text style={styles.label}>state val</Text>
-        <Text style={styles.value}>{localSettings.backgroundColor}</Text>
-      </View>
+    <ScreenWrapper styles={styles.container}>
+      {loading ? (
+        <ActivityIndicator />
+      ) : (
+        <View style={styles.row}>
+          <PlainText text='ダークテーマ' styles={styles.label} />
+          <Switch value={theme === "dark"} onValueChange={toggleTheme} />
+        </View>
+      )}
 
       {/* <View style={styles.row}>
-        <Text style={styles.label}>context val</Text>
-        <Text style={styles.value}>{settings.backgroundColor}</Text>
-      </View> */}
-
-      <View style={styles.row}>
         <Text style={styles.label}>setting</Text>
         <TextInput
           style={styles.value}
           onChangeText={(text) => changeBackgroundColor(text)}
           value={localSettings.backgroundColor}
         ></TextInput>
-      </View>
-    </View>
+      </View> */}
+    </ScreenWrapper>
   )
 }
 
 const styles = StyleSheet.create({
   container: {
-    ...StyleSheet.absoluteFillObject,
     paddingVertical: 4,
     paddingHorizontal: 16,
   },

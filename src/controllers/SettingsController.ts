@@ -14,8 +14,11 @@ export class SettingsController {
   public async initializer() {
     const pairs = await AsyncStorage.multiGet(settingsTypeKeys)
     pairs.forEach(([key, value]) => {
-      if (value !== null && value !== "" && this.isSettingsTypeKey(key))
-        this.settings[key] = value
+      if (value !== null && value !== "" && this.isSettingsTypeKey(key)) {
+        if (key === "theme")
+          this.settings.theme = value === "dark" ? "dark" : "light"
+        else this.settings.downloadedAt = value
+      }
     })
   }
 
@@ -30,7 +33,7 @@ export class SettingsController {
   public async updateValue(key: SettingsTypeKeys, value: string) {
     console.log("> update:", key, value)
     await AsyncStorage.setItem(key, value)
-    this.settings[key] = value
+    this.settings[key] = value as any
   }
 
   public async reset() {

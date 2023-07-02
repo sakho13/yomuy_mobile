@@ -1,28 +1,27 @@
 import { useState } from "react"
-import { useSettingsValue, useSettingsSet } from "../../contexts/settingContext"
+import { useThemeSet, useThemeValue } from "../../contexts/settingContext"
 
 export const SettingScreenController = () => {
-  const settings = useSettingsValue()
-  const setSettings = useSettingsSet()
+  const theme = useThemeValue()
+  const setTheme = useThemeSet()
 
-  const [localSettings, setLocalSettings] = useState(settings)
-
-  const changeBackgroundColor = (val: string) => {
-    setLocalSettings({ ...localSettings, backgroundColor: val })
-    setSettings({
-      ...settings,
-      backgroundColor: val,
-    })
-  }
+  const [loading, setLoading] = useState(true)
 
   const initLocalSetting = () => {
-    setLocalSettings(settings)
+    setLoading(true)
+
+    setLoading(false)
+  }
+
+  const toggleTheme = () => {
+    setTheme()
   }
 
   return {
-    localSettings,
+    loading,
+    theme,
 
     initLocalSetting,
-    changeBackgroundColor,
+    toggleTheme,
   }
 }
