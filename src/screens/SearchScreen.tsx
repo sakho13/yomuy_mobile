@@ -69,6 +69,7 @@ const SearchScreen: React.FC<SettingScreenProps> = () => {
         // 続きの取得
         onEndReached={searchMore}
         onEndReachedThreshold={0.1}
+        style={{ ...StyleSheet.absoluteFillObject }}
       />
     )
 
@@ -93,13 +94,15 @@ const SearchScreen: React.FC<SettingScreenProps> = () => {
         head='小説情報'
         isVisible={selectedIndex !== null}
         onClose={closeNovelDetailModal}
-        bgTouchable={true}
       >
         {selectedIndex !== null ? (
           <NovelDetailMain
             novel={novels[selectedIndex]}
             onTapClose={closeNovelDetailModal}
-            onTapTry={() => setNcode(novels[selectedIndex].ncode)}
+            onTapTry={() => {
+              setNcode(novels[selectedIndex].ncode)
+              closeNovelDetailModal()
+            }}
             onTapAdd={() => addBookShelf(novels[selectedIndex])}
           />
         ) : (

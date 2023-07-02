@@ -33,6 +33,7 @@
     "@react-navigation/drawer": "^6.6.2",
     "@react-navigation/native-stack": "^6.9.12",
     "axios": "^1.4.0",
+    "cheerio": "^1.0.0-rc.12",
     "expo": "~48.0.18",
     "expo-app-loading": "^2.1.1",
     "expo-checkbox": "~2.3.1",
@@ -45,6 +46,7 @@
     "react-native": "0.71.8",
     "react-native-modal": "^13.0.1",
     "react-native-reanimated": "~2.14.4",
+    "react-native-webview": "^13.2.2",
     "react-test-renderer": "^18.2.0"
   },
   "devDependencies": {

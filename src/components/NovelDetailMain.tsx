@@ -1,4 +1,4 @@
-import { Text, View } from "react-native"
+import { Text, View, ScrollView } from "react-native"
 import { NarouAPINovelPart } from "../types/Narou"
 import PlainTextButton from "./atoms/PlainTextButton"
 
@@ -23,13 +23,16 @@ const NovelDetailMain: React.FC<Props> = ({
     )
 
   return (
-    <View>
-      <Text>{novel.title}</Text>
+    <View style={{ minHeight: 400 }}>
+      <Text style={{ fontSize: 18 }}>{novel.title}</Text>
+
+      {/* <ScrollView>
+        <Text>{novel.story}</Text>
+      </ScrollView> */}
 
       <View style={{ borderTopWidth: 1 }}>
         <View
           style={{
-            // backgroundColor: "red",
             width: "100%",
             display: "flex",
             flexDirection: "row",
