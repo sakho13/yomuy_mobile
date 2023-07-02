@@ -3,12 +3,13 @@ import { HomeScreenProps } from "../types/ScreenPropsTypes"
 import { homeScreenController } from "../controllers/screens/HomeScreenController"
 import NovelCell from "../components/NovelCell"
 import FaIcon from "../components/atoms/FaIcon"
+import ScreenWrapper from "../components/atoms/ScreenWrapper"
 
 const HomeScreen: React.FC<HomeScreenProps> = ({}) => {
   const { novels } = homeScreenController()
 
   return (
-    <View style={styles.container}>
+    <ScreenWrapper>
       <FlatList
         data={novels}
         renderItem={({ item: novel }) => (
@@ -23,14 +24,11 @@ const HomeScreen: React.FC<HomeScreenProps> = ({}) => {
           <FaIcon name='file-download' size={24} />
         </View>
       </View>
-    </View>
+    </ScreenWrapper>
   )
 }
 
 const styles = StyleSheet.create({
-  container: {
-    ...StyleSheet.absoluteFillObject,
-  },
   bottom: {
     flexDirection: "row",
   },

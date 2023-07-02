@@ -1,6 +1,6 @@
 import { Text, View, ScrollView } from "react-native"
 import { NarouAPINovelPart } from "../types/Narou"
-import PlainTextButton from "./atoms/PlainTextButton"
+import PlainTextButton from "./PlainTextButton"
 
 type Props = {
   novel: NarouAPINovelPart

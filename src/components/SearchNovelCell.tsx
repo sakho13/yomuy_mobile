@@ -4,6 +4,7 @@ import { PureComponent, ReactNode, useContext } from "react"
 import { NarouAPINovelPart, bigGenre, genre } from "../types/Narou"
 import { convStrDate2Formatted } from "../functions/commonFunctions"
 import LabeledText from "./atoms/LabeledText"
+import PlainText from "./atoms/PlainText"
 
 type Props = {
   novel: NarouAPINovelPart
@@ -46,7 +47,7 @@ const SearchNovelCellMain: React.FC<Props> = ({ novel, onTap }) => {
       onPress={onTap}
     >
       <View style={styles.info}>
-        <Text style={styles.title}>{novel.title}</Text>
+        <PlainText text={novel.title} styles={styles.title} />
 
         <View style={styles.details}>
           <LabeledText

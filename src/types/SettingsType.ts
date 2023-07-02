@@ -38,14 +38,6 @@ export type ThemeColorType = Omit<SettingsColorType, "primaryColor">
 
 // ******************** default value ********************
 
-// export const settingsDefaultColorValues: Omit<SettingsColorType, "theme"> = {
-//   backgroundColor: "#ECECEC",
-//   secondaryColor: "#ffffff",
-//   borderColor: "#BCBCBC",
-//   primaryColor: "#0098C7",
-//   textColor: "#313131",
-// }
-
 export const settingsLightColorValues: ThemeColorType = {
   backgroundColor: "#ECECEC",
   secondaryColor: "#ffffff",
@@ -56,7 +48,7 @@ export const settingsLightColorValues: ThemeColorType = {
 export const settingsDarkColorValues: ThemeColorType = {
   backgroundColor: "#313131",
   secondaryColor: "#5A5A5A",
-  borderColor: "#BCBCBC",
+  borderColor: "#525252",
   textColor: "#ECECEC",
 }
 

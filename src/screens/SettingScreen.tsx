@@ -5,10 +5,13 @@ import { useFocusEffect } from "@react-navigation/native"
 import { SettingScreenController } from "../controllers/screens/SettingScreenController"
 import PlainText from "../components/atoms/PlainText"
 import ScreenWrapper from "../components/atoms/ScreenWrapper"
+import { useSettingsValue } from "../contexts/settingContext"
 
 const SettingScreen: React.FC<SettingScreenProps> = ({}) => {
   const { theme, loading, initLocalSetting, toggleTheme } =
     SettingScreenController()
+
+  const { primaryColor } = useSettingsValue()
 
   useFocusEffect(
     useCallback(() => {
@@ -21,10 +24,22 @@ const SettingScreen: React.FC<SettingScreenProps> = ({}) => {
       {loading ? (
         <ActivityIndicator />
       ) : (
-        <View style={styles.row}>
-          <PlainText text='ダークテーマ' styles={styles.label} />
-          <Switch value={theme === "dark"} onValueChange={toggleTheme} />
-        </View>
+        <>
+          <View style={styles.row}>
+            <PlainText text='ダークテーマ' styles={styles.label} />
+            <Switch
+              value={theme === "dark"}
+              onValueChange={toggleTheme}
+              trackColor={{
+                true: primaryColor,
+              }}
+            />
+          </View>
+
+          {/* <View style={styles.row}>
+            <PlainText text='設定をリセット' styles={styles.label} />
+          </View> */}
+        </>
       )}
 
       {/* <View style={styles.row}>
@@ -49,6 +64,7 @@ const styles = StyleSheet.create({
     display: "flex",
     justifyContent: "space-between",
     alignItems: "center",
+    marginVertical: 4,
   },
   label: {
     fontSize: 20,

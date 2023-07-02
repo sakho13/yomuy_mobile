@@ -11,7 +11,11 @@ type Props = {
 const LabeledText: React.FC<Props> = ({ label, text, textCustom }) => {
   const { textColor } = useSettingsValue()
 
-  const labelStyle: StyleProp<TextStyle> = { fontWeight: "600", marginRight: 4 }
+  const labelStyle: StyleProp<TextStyle> = {
+    color: textColor,
+    fontWeight: "600",
+    marginRight: 4,
+  }
   const textStyle: StyleProp<TextStyle> = { color: textColor, fontSize: 14 }
 
   return (

@@ -1,5 +1,4 @@
-import { FlatList, Pressable, StyleSheet, Text, View } from "react-native"
-import { useEpisodeSet } from "../contexts/novelContext"
+import { FlatList, Pressable, StyleSheet, Text } from "react-native"
 import { episodeListScreenController } from "../controllers/screens/EpisodeListScreenController"
 import { useEffect } from "react"
 import { ActivityIndicator } from "react-native"
@@ -9,6 +8,7 @@ import PlainText from "../components/atoms/PlainText"
 import SlideModal from "../components/SlideModal"
 import IconFab from "../components/IconFab"
 import Honbun from "../components/Honbun"
+import ScreenWrapper from "../components/atoms/ScreenWrapper"
 
 const EpisodeListScreen: React.FC = () => {
   const {
@@ -32,22 +32,22 @@ const EpisodeListScreen: React.FC = () => {
 
   if (loading)
     return (
-      <View>
+      <ScreenWrapper>
         <ActivityIndicator />
-      </View>
+      </ScreenWrapper>
     )
 
   if (honbun !== null) return <Honbun honbun={honbun} />
 
   if (episodes.length === 0)
     return (
-      <View>
+      <ScreenWrapper>
         <Text>{message}</Text>
-      </View>
+      </ScreenWrapper>
     )
 
   return (
-    <View style={styles.container}>
+    <ScreenWrapper>
       <PlainText
         text={title}
         styles={{
@@ -84,15 +84,11 @@ const EpisodeListScreen: React.FC = () => {
           <PlainText text='本棚へ追加' styles={styles.modalLabelText} />
         </Pressable>
       </SlideModal>
-    </View>
+    </ScreenWrapper>
   )
 }
 
 const styles = StyleSheet.create({
-  container: {
-    ...StyleSheet.absoluteFillObject,
-  },
-
   modalLabel: {
     marginVertical: 8,
   },

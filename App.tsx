@@ -14,7 +14,6 @@ import { SettingContext, useSettingsValue } from "./src/contexts/settingContext"
 import { NovelContext } from "./src/contexts/novelContext"
 import EpisodeListScreen from "./src/screens/EpisodeListScreen"
 import EpisodeScreen from "./src/screens/EpisodeScreen"
-import PlainText from "./src/components/atoms/PlainText"
 
 const Drawer = createDrawerNavigator<DrawerNavigationTypes>()
 const Stack = createNativeStackNavigator<StackNavigationTypes>()
@@ -30,13 +29,22 @@ const AppWrapper: React.FC<{ children: React.ReactNode }> = ({ children }) => {
 }
 
 const Index: React.FC = () => {
-  const { secondaryColor } = useSettingsValue()
+  const { secondaryColor, textColor, primaryColor } = useSettingsValue()
 
   return (
     <Drawer.Navigator
       initialRouteName='SearchScreen'
       screenOptions={{
         headerStyle: {
+          backgroundColor: secondaryColor,
+        },
+        headerTitleStyle: {
+          color: textColor,
+        },
+        drawerLabelStyle: {
+          color: textColor,
+        },
+        drawerStyle: {
           backgroundColor: secondaryColor,
         },
       }}
@@ -76,11 +84,18 @@ const Index: React.FC = () => {
 }
 
 export default function App() {
+  const { secondaryColor } = useSettingsValue()
+
   return (
     <AppWrapper>
       <Stack.Navigator
         initialRouteName='IndexScreen'
-        screenOptions={{ animation: "slide_from_right" }}
+        screenOptions={{
+          animation: "slide_from_right",
+          headerStyle: {
+            backgroundColor: secondaryColor,
+          },
+        }}
       >
         <Stack.Screen
           name='IndexScreen'
