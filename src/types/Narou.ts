@@ -119,3 +119,16 @@ export const genre: { [key in GenreKey]: string } = {
   9999: "その他〔その他〕",
   9801: "ノンジャンル〔ノンジャンル〕",
 }
+
+export type NovelEpisodeChapter = {
+  chapterName: string
+}
+
+export type NovelEpisodeTitle = {
+  episodeNo: number
+  subtitle: string
+  upDate: string
+  isKaitou: boolean
+}
+
+export type NovelEpisode = NovelEpisodeTitle | NovelEpisodeChapter
