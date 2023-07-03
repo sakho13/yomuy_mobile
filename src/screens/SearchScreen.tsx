@@ -1,7 +1,6 @@
-import { View, StyleSheet, Text, ActivityIndicator } from "react-native"
+import { View, StyleSheet, ActivityIndicator } from "react-native"
 import { searchScreenController } from "../controllers/screens/SearchScreenController"
 import SearchNovelCell from "../components/SearchNovelCell"
-import { useSettingsValue } from "../contexts/settingContext"
 import React, { useEffect, useState } from "react"
 import { SettingScreenProps } from "../types/ScreenPropsTypes"
 import SlideModal from "../components/SlideModal"
@@ -11,6 +10,8 @@ import PlainTextButton from "../components/PlainTextButton"
 import NovelDetailMain from "../components/NovelDetailMain"
 import { useNcodeSet } from "../contexts/novelContext"
 import IconFab from "../components/IconFab"
+import PlainText from "../components/atoms/PlainText"
+import ScreenWrapper from "../components/atoms/ScreenWrapper"
 
 const SearchScreen: React.FC<SettingScreenProps> = () => {
   const {
@@ -35,8 +36,6 @@ const SearchScreen: React.FC<SettingScreenProps> = () => {
 
   const setNcode = useNcodeSet()
 
-  const { backgroundColor } = useSettingsValue()
-
   const [_tappedSearch, setTappedSearch] = useState(false)
 
   useEffect(() => {
@@ -52,7 +51,7 @@ const SearchScreen: React.FC<SettingScreenProps> = () => {
           height: "100%",
         }}
       >
-        <Text>{listMessage}</Text>
+        <PlainText text={listMessage} />
       </View>
     ) : (
       <FlatList
@@ -74,7 +73,7 @@ const SearchScreen: React.FC<SettingScreenProps> = () => {
     )
 
   return (
-    <View style={{ ...styles.container, backgroundColor }}>
+    <ScreenWrapper>
       {isFetching ? <ActivityIndicator size={"large"} /> : novelList}
 
       {/* SearchButton FAB */}
@@ -107,7 +106,7 @@ const SearchScreen: React.FC<SettingScreenProps> = () => {
           />
         ) : (
           <View>
-            <Text>存在しない小説情報です</Text>
+            <PlainText text='存在しない小説情報です' />
           </View>
         )}
       </SlideModal>
@@ -128,14 +127,8 @@ const SearchScreen: React.FC<SettingScreenProps> = () => {
 
         <PlainTextButton text='検索' onTap={search} icon='search' />
       </SlideModal>
-    </View>
+    </ScreenWrapper>
   )
 }
-
-const styles = StyleSheet.create({
-  container: {
-    ...StyleSheet.absoluteFillObject,
-  },
-})
 
 export default SearchScreen
