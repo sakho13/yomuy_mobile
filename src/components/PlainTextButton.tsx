@@ -1,7 +1,6 @@
 import { Pressable, Text, ViewStyle } from "react-native"
 import { useSettingsValue } from "../contexts/settingContext"
 import FaIcon from "./atoms/FaIcon"
-import PlainText from "./atoms/PlainText"
 
 type Props = {
   text: string
@@ -45,14 +44,15 @@ const PlainTextButton: React.FC<Props> = ({
         return { ...styleBase, backgroundColor: styleBGC(pressed) }
       }}
     >
-      <PlainText
-        text={text}
-        styles={{
+      <Text
+        style={{
           fontWeight: "600",
           fontSize: 16,
           color: contentColor,
         }}
-      />
+      >
+        {text}
+      </Text>
       {icon ? (
         <FaIcon
           name={icon}

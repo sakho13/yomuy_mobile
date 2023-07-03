@@ -2,6 +2,7 @@ import React, { useState } from "react"
 import { Text } from "react-native"
 import { View } from "react-native"
 import { TextInput } from "react-native"
+import { useSettingsValue } from "../contexts/settingContext"
 
 type Props = {
   placeholder?: string
@@ -17,6 +18,7 @@ const PlainTextInput: React.FC<Props> = ({
   validation,
 }) => {
   const [error, setError] = useState<string | null>(null)
+  const { textColor } = useSettingsValue()
 
   return (
     <View>
@@ -29,7 +31,10 @@ const PlainTextInput: React.FC<Props> = ({
         }}
         style={{
           borderBottomWidth: 1,
+          color: textColor,
+          borderColor: textColor,
         }}
+        placeholderTextColor={textColor}
       />
 
       <Text style={{ color: "red" }}>{error ? error : ""}</Text>
