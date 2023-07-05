@@ -1,29 +1,16 @@
-import { Pressable, Text, ViewStyle } from "react-native"
+import { Pressable, ViewStyle } from "react-native"
 import { useSettingsValue } from "../contexts/settingContext"
 import FaIcon from "./atoms/FaIcon"
+import PlainText from "./atoms/PlainText"
 
 type Props = {
   text: string
   onTap: () => void
-  gray?: boolean
   icon?: string
 }
 
-const PlainTextButton: React.FC<Props> = ({
-  text,
-  onTap,
-  gray = false,
-  icon,
-}) => {
-  const { textColor, borderColor, primaryColor, backgroundColor } =
-    useSettingsValue()
-
-  const contentColor = gray ? textColor : backgroundColor
-
-  const styleBGC = (pressed: boolean) => {
-    if (pressed) return gray ? "black" : borderColor
-    return gray ? borderColor : primaryColor
-  }
+const PlainTextButton: React.FC<Props> = ({ text, onTap, icon }) => {
+  const { primaryColor } = useSettingsValue()
 
   const styleBase: ViewStyle = {
     marginHorizontal: 8,
@@ -41,23 +28,24 @@ const PlainTextButton: React.FC<Props> = ({
     <Pressable
       onPress={onTap}
       style={({ pressed }) => {
-        return { ...styleBase, backgroundColor: styleBGC(pressed) }
+        if (pressed) return { ...styleBase, backgroundColor: "#4242425D" }
+        return { ...styleBase, backgroundColor: "#00000025" }
       }}
     >
-      <Text
-        style={{
+      <PlainText
+        text={text}
+        styles={{
           fontWeight: "600",
-          fontSize: 16,
-          color: contentColor,
+          fontSize: 18,
+          color: primaryColor,
         }}
-      >
-        {text}
-      </Text>
+      />
+
       {icon ? (
         <FaIcon
           name={icon}
           style={{ paddingLeft: 4, paddingRight: 2 }}
-          color={contentColor}
+          color={primaryColor}
         />
       ) : null}
     </Pressable>
