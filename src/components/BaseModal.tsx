@@ -8,23 +8,25 @@ type Props = {
   head: string
   onClose: () => void
   bgTouchable?: boolean
+  slidable?: boolean
 }
 
-const SlideModal: React.FC<Props> = ({
+const BaseModal: React.FC<Props> = ({
   isVisible,
   head,
   onClose,
   children,
   bgTouchable,
+  slidable = true,
 }) => {
   const { backgroundColor, textColor } = useSettingsValue()
 
   return (
     <Modal
       isVisible={isVisible}
-      onSwipeComplete={onClose}
-      swipeDirection={"down"}
       onBackdropPress={bgTouchable ? onClose : undefined}
+      onSwipeComplete={slidable ? onClose : undefined}
+      swipeDirection={slidable ? "down" : undefined}
     >
       <View
         style={{ backgroundColor, paddingHorizontal: 12, paddingVertical: 16 }}
@@ -39,4 +41,4 @@ const SlideModal: React.FC<Props> = ({
   )
 }
 
-export default SlideModal
+export default BaseModal

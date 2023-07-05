@@ -3,7 +3,6 @@ import { searchScreenController } from "../controllers/screens/SearchScreenContr
 import SearchNovelCell from "../components/SearchNovelCell"
 import React, { useEffect, useState } from "react"
 import { SettingScreenProps } from "../types/ScreenPropsTypes"
-import SlideModal from "../components/SlideModal"
 import PlainTextInput from "../components/PlainTextInput"
 import { FlatList } from "react-native"
 import PlainTextButton from "../components/PlainTextButton"
@@ -12,6 +11,7 @@ import { useNcodeSet } from "../contexts/novelContext"
 import IconFab from "../components/IconFab"
 import PlainText from "../components/atoms/PlainText"
 import ScreenWrapper from "../components/atoms/ScreenWrapper"
+import BaseModal from "../components/BaseModal"
 
 const SearchScreen: React.FC<SettingScreenProps> = () => {
   const {
@@ -89,10 +89,12 @@ const SearchScreen: React.FC<SettingScreenProps> = () => {
       />
 
       {/* NovelDetailModal */}
-      <SlideModal
+      <BaseModal
         head='小説情報'
         isVisible={selectedIndex !== null}
         onClose={closeNovelDetailModal}
+        slidable={false}
+        bgTouchable={true}
       >
         {selectedIndex !== null ? (
           <NovelDetailMain
@@ -109,10 +111,10 @@ const SearchScreen: React.FC<SettingScreenProps> = () => {
             <PlainText text='存在しない小説情報です' />
           </View>
         )}
-      </SlideModal>
+      </BaseModal>
 
       {/* SearchingModal */}
-      <SlideModal
+      <BaseModal
         head='検索項目'
         isVisible={openingSearchModal}
         onClose={closeSearchModal}
@@ -126,7 +128,7 @@ const SearchScreen: React.FC<SettingScreenProps> = () => {
         </View>
 
         <PlainTextButton text='検索' onTap={search} icon='search' />
-      </SlideModal>
+      </BaseModal>
     </ScreenWrapper>
   )
 }

@@ -2,13 +2,12 @@ import { FlatList, Pressable, StyleSheet, Text } from "react-native"
 import { episodeListScreenController } from "../controllers/screens/EpisodeListScreenController"
 import { useEffect } from "react"
 import { ActivityIndicator } from "react-native"
-
 import EpisodeItem from "../components/EpisodeItem"
 import PlainText from "../components/atoms/PlainText"
-import SlideModal from "../components/SlideModal"
 import IconFab from "../components/IconFab"
 import Honbun from "../components/Honbun"
 import ScreenWrapper from "../components/atoms/ScreenWrapper"
+import BaseModal from "../components/BaseModal"
 
 const EpisodeListScreen: React.FC = () => {
   const {
@@ -70,7 +69,7 @@ const EpisodeListScreen: React.FC = () => {
         onPressOut={() => {}}
       />
 
-      <SlideModal
+      <BaseModal
         head='小説詳細'
         isVisible={openingDetailModal}
         onClose={() => setOpeningDetailModal(false)}
@@ -83,7 +82,7 @@ const EpisodeListScreen: React.FC = () => {
         <Pressable onPress={() => {}} style={styles.modalLabel}>
           <PlainText text='本棚へ追加' styles={styles.modalLabelText} />
         </Pressable>
-      </SlideModal>
+      </BaseModal>
     </ScreenWrapper>
   )
 }
