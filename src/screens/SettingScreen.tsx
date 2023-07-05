@@ -1,4 +1,10 @@
-import { View, StyleSheet, Switch, ActivityIndicator } from "react-native"
+import {
+  View,
+  StyleSheet,
+  Switch,
+  ActivityIndicator,
+  Pressable,
+} from "react-native"
 import { SettingScreenProps } from "../types/ScreenPropsTypes"
 import { useCallback } from "react"
 import { useFocusEffect } from "@react-navigation/native"
@@ -6,12 +12,22 @@ import { SettingScreenController } from "../controllers/screens/SettingScreenCon
 import PlainText from "../components/atoms/PlainText"
 import ScreenWrapper from "../components/atoms/ScreenWrapper"
 import { useSettingsValue } from "../contexts/settingContext"
+import BaseModal from "../components/BaseModal"
+import PlainTextButton from "../components/PlainTextButton"
 
 const SettingScreen: React.FC<SettingScreenProps> = ({}) => {
-  const { theme, loading, initLocalSetting, toggleTheme } =
-    SettingScreenController()
+  const {
+    theme,
+    loading,
+    openingAboutModal,
+    initLocalSetting,
+    toggleTheme,
+    openContactForm,
+    openAboutModal,
+    closeAboutModal,
+  } = SettingScreenController()
 
-  const { primaryColor } = useSettingsValue()
+  const { primaryColor, borderColor } = useSettingsValue()
 
   useFocusEffect(
     useCallback(() => {
@@ -36,9 +52,48 @@ const SettingScreen: React.FC<SettingScreenProps> = ({}) => {
             />
           </View>
 
-          {/* <View style={styles.row}>
-            <PlainText text='設定をリセット' styles={styles.label} />
-          </View> */}
+          <View style={{ ...styles.divider, borderColor }} />
+
+          <Pressable
+            style={{
+              ...styles.row,
+              justifyContent: "flex-start",
+              alignItems: "baseline",
+            }}
+            onPress={openContactForm}
+          >
+            <PlainText text='要望・問い合わせ' styles={styles.label} />
+            <PlainText
+              text='(Google Form)'
+              styles={{ fontSize: 14, marginLeft: 18 }}
+            />
+          </Pressable>
+
+          <Pressable style={styles.row} onPress={openAboutModal}>
+            <PlainText text='本アプリについて' styles={styles.label} />
+          </Pressable>
+
+          {/* AboutThisAppModal */}
+          <BaseModal
+            head='本アプリについて'
+            isVisible={openingAboutModal}
+            onClose={closeAboutModal}
+            bgTouchable={true}
+          >
+            <PlainText text='制作者: Sakho' />
+
+            <View style={styles.divider} />
+
+            <PlainText text='「小説家になろう」は株式会社ヒナプロジェクトの登録商標です' />
+
+            <View style={{ marginTop: 16 }} />
+
+            <PlainTextButton
+              text='閉じる'
+              onTap={closeAboutModal}
+              icon='times'
+            />
+          </BaseModal>
         </>
       )}
 
@@ -73,6 +128,12 @@ const styles = StyleSheet.create({
     fontSize: 20,
     borderBottomWidth: 0.8,
     minWidth: "30%",
+  },
+
+  divider: {
+    borderTopWidth: 1,
+    marginBottom: 8,
+    marginTop: 8,
   },
 })
 
