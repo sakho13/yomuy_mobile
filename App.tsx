@@ -84,38 +84,43 @@ const Index: React.FC = () => {
   )
 }
 
-export default function App() {
+function NovelStack() {
   const { secondaryColor } = useSettingsValue()
+  return (
+    <Stack.Navigator
+      initialRouteName='IndexScreen'
+      screenOptions={{
+        animation: "slide_from_right",
+        headerStyle: {
+          backgroundColor: secondaryColor,
+        },
+      }}
+    >
+      <Stack.Screen
+        name='IndexScreen'
+        component={Index}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <Stack.Screen
+        name='EpisodeListScreen'
+        options={{ title: "" }}
+        component={EpisodeListScreen}
+      />
+      <Stack.Screen
+        name='EpisodeScreen'
+        options={{ title: "" }}
+        component={EpisodeScreen}
+      />
+    </Stack.Navigator>
+  )
+}
 
+export default function App() {
   return (
     <AppWrapper>
-      <Stack.Navigator
-        initialRouteName='IndexScreen'
-        screenOptions={{
-          animation: "slide_from_right",
-          headerStyle: {
-            backgroundColor: secondaryColor,
-          },
-        }}
-      >
-        <Stack.Screen
-          name='IndexScreen'
-          component={Index}
-          options={{
-            headerShown: false,
-          }}
-        />
-        <Stack.Screen
-          name='EpisodeListScreen'
-          options={{ title: "" }}
-          component={EpisodeListScreen}
-        />
-        <Stack.Screen
-          name='EpisodeScreen'
-          options={{ title: "" }}
-          component={EpisodeScreen}
-        />
-      </Stack.Navigator>
+      <NovelStack />
     </AppWrapper>
   )
 }
