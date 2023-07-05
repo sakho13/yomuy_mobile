@@ -1,4 +1,5 @@
 import WebView from "react-native-webview"
+import { useSettingsValue } from "../contexts/settingContext"
 
 type Props = {
   // html
@@ -6,12 +7,15 @@ type Props = {
 }
 
 const Honbun: React.FC<Props> = ({ honbun }) => {
+  const { backgroundColor, textColor } = useSettingsValue()
+
   const content = `
   <div>
     <style>
       #honbun {
         margin-left: 16px;
         margin-right: 16px;
+        color: ${textColor}
       }
 
       #honbun > p {
@@ -27,7 +31,7 @@ const Honbun: React.FC<Props> = ({ honbun }) => {
       source={{
         html: content,
       }}
-      style={{}}
+      style={{ backgroundColor }}
     />
   )
 }
