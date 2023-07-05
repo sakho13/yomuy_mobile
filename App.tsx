@@ -47,7 +47,7 @@ const Index: React.FC = () => {
         drawerStyle: {
           backgroundColor: secondaryColor,
         },
-        drawerActiveBackgroundColor: primaryColor,
+        drawerActiveBackgroundColor: primaryColor + "55",
       }}
     >
       <Drawer.Screen
