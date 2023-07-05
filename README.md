@@ -21,6 +21,10 @@
 | :--------- | :------------- |
 | 2023/06/11 | 開発開始 Start |
 
+## Links
+
+[要望・問い合わせ（Request・Contact）](https://forms.gle/yZFvmimNPqgSmgEe7)
+
 ## コミットメッセージ Commit Message
 
 | 絵文字 | 意味                             | メッセージ                      |
