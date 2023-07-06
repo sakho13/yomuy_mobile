@@ -54,7 +54,7 @@ export const settingsDarkColorValues: ThemeColorType = {
 
 export const settingsDefaultDateValues: SettingsDateType = {
   /** 最新ダウンロード日時 */
-  downloadedAt: "00000000000000000",
+  downloadedAt: "99990000000000000",
 }
 
 export const settingsDefaultValues: SettingsType = {

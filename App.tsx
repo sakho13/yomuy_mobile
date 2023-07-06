@@ -33,7 +33,7 @@ const Index: React.FC = () => {
 
   return (
     <Drawer.Navigator
-      initialRouteName='SearchScreen'
+      initialRouteName='HomeScreen'
       screenOptions={{
         headerStyle: {
           backgroundColor: secondaryColor,
