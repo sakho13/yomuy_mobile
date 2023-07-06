@@ -1,12 +1,13 @@
-import { Text, View, StyleSheet, FlatList } from "react-native"
+import { View, StyleSheet, FlatList, Pressable } from "react-native"
 import { HomeScreenProps } from "../types/ScreenPropsTypes"
 import { homeScreenController } from "../controllers/screens/HomeScreenController"
 import NovelCell from "../components/NovelCell"
 import FaIcon from "../components/atoms/FaIcon"
 import ScreenWrapper from "../components/atoms/ScreenWrapper"
+import PlainText from "../components/atoms/PlainText"
 
 const HomeScreen: React.FC<HomeScreenProps> = ({}) => {
-  const { novels } = homeScreenController()
+  const { novels, novelUpdate } = homeScreenController()
 
   return (
     <ScreenWrapper>
@@ -17,19 +18,19 @@ const HomeScreen: React.FC<HomeScreenProps> = ({}) => {
         )}
       />
 
-      <View style={{ ...styles.bottom }}>
-        <Text>aaa</Text>
+      <View style={{ ...styles.footer }}>
+        <PlainText text={`最終更新日`} />
 
-        <View style={styles.dlBtn}>
-          <FaIcon name='file-download' size={24} />
-        </View>
+        <Pressable onPress={novelUpdate} style={styles.dlBtn}>
+          <FaIcon name='redo' size={24} />
+        </Pressable>
       </View>
     </ScreenWrapper>
   )
 }
 
 const styles = StyleSheet.create({
-  bottom: {
+  footer: {
     flexDirection: "row",
   },
 

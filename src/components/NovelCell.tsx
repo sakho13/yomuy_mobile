@@ -1,40 +1,39 @@
-import { StyleSheet, Text, View } from "react-native"
-import { DownloadedNovelInfo } from "../types/Yomuy"
+import { Pressable, StyleSheet, Text, View } from "react-native"
+import { NovelInBookshelf } from "../types/Yomuy"
 import { CommonDate } from "../classes/CommonDate"
+import { useSettingsValue } from "../contexts/settingContext"
+import { novelCellStyle } from "../styles/novelCellStyles"
 
 type Props = {
-  novel: DownloadedNovelInfo
+  novel: NovelInBookshelf
   onTap: () => void
 }
 
 const DownloadedNovelCell: React.FC<Props> = ({ novel }) => {
-  const dlDate = new CommonDate(novel.lastUpAt)
-  // const { primaryColor } = useContext(SettingContext)
+  const addedAt = new CommonDate(novel.addedAt)
+
+  const { borderColor, backgroundColor } = useSettingsValue()
 
   return (
-    <View
-      style={{
-        ...styles.container,
-        // backgroundColor: primaryColor
+    <Pressable
+      style={({ pressed }) => {
+        return {
+          ...novelCellStyle.container,
+          borderColor,
+          backgroundColor,
+          opacity: pressed ? 0.9 : 1,
+        }
       }}
     >
       <View style={styles.info}>
         <Text style={styles.title}>{novel.title}</Text>
-        <Text>最終掲載: {dlDate.getByKanji}</Text>
+        <Text>最終掲載: {addedAt.getByKanji}</Text>
       </View>
-    </View>
+    </Pressable>
   )
 }
 
 const styles = StyleSheet.create({
-  container: {
-    marginHorizontal: 10,
-    marginVertical: 4,
-    paddingHorizontal: 4,
-    paddingVertical: 8,
-    borderWidth: 0.4,
-    borderRadius: 8,
-  },
   info: {},
 
   title: {
