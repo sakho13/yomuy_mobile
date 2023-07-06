@@ -67,3 +67,19 @@ export function parseDateFormatText(text: string): string {
   const parsed = text.match(reg)
   return parsed && parsed[0] ? parsed[0].trim() : ""
 }
+
+/**
+ * 99991231125959999 から 9999/12/31 12:59 に変換する
+ */
+export function parseNum2Formatted(num: number): string {
+  const str = String(num)
+  if (str.length !== 17) return "unknown"
+
+  const y = parseInt(str.slice(0, 4))
+  const m = parseInt(str.slice(4, 6))
+  const d = parseInt(str.slice(6, 8))
+  const h = parseInt(str.slice(8, 10))
+  const mi = parseInt(str.slice(10, 12))
+
+  return `${y}/${m}/${d} ${h}:${mi}`
+}
