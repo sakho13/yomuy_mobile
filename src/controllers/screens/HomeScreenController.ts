@@ -1,46 +1,35 @@
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import { useFocusEffect } from "@react-navigation/native"
-import { DownloadedNovelInfo } from "../../types/Yomuy"
+import { NovelInBookshelf } from "../../types/Yomuy"
 import React from "react"
-import { CommonDate } from "../../classes/CommonDate"
 
 export const homeScreenController = () => {
-  const [novels, setNovels] = useState<DownloadedNovelInfo[]>([])
+  const [novels, setNovels] = useState<NovelInBookshelf[]>([])
 
   useFocusEffect(
     React.useCallback(() => {
-      const now = new CommonDate()
-
-      const fetched: DownloadedNovelInfo[] = [...Array(10)].map((_, i) => {
+      const fetched: NovelInBookshelf[] = [...Array(10)].map((_, i) => {
         return {
           ncode: `${i}`,
           title: `title ${i}: こんなかんじでタイトルが入るよ`,
-          authorId: "",
-          authorName: "",
-          story: "",
-          bigGenre: 1,
-          genre: 101,
-          keyword: "",
-          firstUpAt: 0,
-          lastUpAt: 0,
-          novelType: 1,
-          isEnd: 1,
-          downloadedAt: now.getByNumber,
-        } as DownloadedNovelInfo
+          addedAt: 99991231245959000,
+          general_lastup: "",
+        } as NovelInBookshelf
       })
-      setNovels([
-        ...fetched,
-        // {
-        //   ncode: "long",
-        //   title:
-        //     "とても長いしょうせつのタイトルです。高さを上手く調整しましょう！",
-        //   downloadedAt: now.getByNumber,
-        // } as DownloadedNovelInfo,
-      ])
+      setNovels([...fetched])
     }, []),
   )
 
+  /**
+   * 本棚に追加した小説の更新を確認する
+   */
+  const novelUpdate = () => {
+    // タイトルやストーリーなど
+  }
+
   return {
     novels,
+
+    novelUpdate,
   }
 }

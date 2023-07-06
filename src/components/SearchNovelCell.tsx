@@ -1,10 +1,11 @@
-import { Pressable, StyleSheet, Text, View } from "react-native"
+import { Pressable, View } from "react-native"
 import { useSettingsValue } from "../contexts/settingContext"
-import { PureComponent, ReactNode, useContext } from "react"
+import { PureComponent, ReactNode } from "react"
 import { NarouAPINovelPart, bigGenre, genre } from "../types/Narou"
 import { convStrDate2Formatted } from "../functions/commonFunctions"
 import LabeledText from "./atoms/LabeledText"
 import PlainText from "./atoms/PlainText"
+import { novelCellStyle } from "../styles/novelCellStyles"
 
 type Props = {
   novel: NarouAPINovelPart
@@ -38,7 +39,7 @@ const SearchNovelCellMain: React.FC<Props> = ({ novel, onTap }) => {
     <Pressable
       style={(pressed) => {
         return {
-          ...styles.container,
+          ...novelCellStyle.container,
           borderColor: borderColor,
           backgroundColor,
           opacity: pressed ? 0.9 : 1,
@@ -46,10 +47,10 @@ const SearchNovelCellMain: React.FC<Props> = ({ novel, onTap }) => {
       }}
       onPress={onTap}
     >
-      <View style={styles.info}>
-        <PlainText text={novel.title} styles={styles.title} />
+      <View style={novelCellStyle.info}>
+        <PlainText text={novel.title} styles={novelCellStyle.title} />
 
-        <View style={styles.details}>
+        <View style={novelCellStyle.details}>
           <LabeledText
             label='最新投稿日'
             text={`${convStrDate2Formatted(
@@ -64,31 +65,5 @@ const SearchNovelCellMain: React.FC<Props> = ({ novel, onTap }) => {
     </Pressable>
   )
 }
-
-const styles = StyleSheet.create({
-  container: {
-    borderWidth: 2,
-    borderLeftWidth: 8,
-    flexDirection: "row",
-    justifyContent: "space-between",
-    paddingVertical: 4,
-  },
-  info: {
-    paddingHorizontal: 4,
-  },
-
-  title: {
-    fontSize: 17,
-    fontWeight: "bold",
-  },
-
-  details: {
-    paddingHorizontal: 8,
-  },
-
-  rightInfo: {
-    width: 30,
-  },
-})
 
 export default SearchNovelCell

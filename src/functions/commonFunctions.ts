@@ -48,9 +48,17 @@ export function isColorText(text: string): text is string {
 }
 
 /**
+ * 受け取ったテキストがNコードの形式である
+ */
+export function isNcode(text: string): boolean {
+  return text[0] === "n"
+}
+
+/**
  * 9999-12-31 24:59:59 を 9999年12月31日 24時59分 形式に変換する
  */
 export function convStrDate2Formatted(dateStr: string) {
+  if (dateStr.length !== 19) return "unknown"
   const date = dateStr.split(" ")
   const [yyyy, mm, dd] = date[0].split("-")
   const [hh, mi, _ss] = date[1].split(":")
@@ -65,4 +73,20 @@ export function parseDateFormatText(text: string): string {
   const reg = /\d{4}\/\d{2}\/\d{2} \d{2}:\d{2}/
   const parsed = text.match(reg)
   return parsed && parsed[0] ? parsed[0].trim() : ""
+}
+
+/**
+ * 99991231125959999 から 9999/12/31 12:59 に変換する
+ */
+export function parseNum2Formatted(num: number): string {
+  const str = String(num)
+  if (str.length !== 17) return "unknown"
+
+  const y = parseInt(str.slice(0, 4))
+  const m = parseInt(str.slice(4, 6))
+  const d = parseInt(str.slice(6, 8))
+  const h = parseInt(str.slice(8, 10))
+  const mi = parseInt(str.slice(10, 12))
+
+  return `${y}/${m}/${d} ${h}:${mi}`
 }

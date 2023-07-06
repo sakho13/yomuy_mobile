@@ -1,46 +1,45 @@
-import { StyleSheet, Text, View } from "react-native"
-import { DownloadedNovelInfo } from "../types/Yomuy"
-import { CommonDate } from "../classes/CommonDate"
+import { Pressable, StyleSheet, Text, View } from "react-native"
+import { NovelInBookshelf } from "../types/Yomuy"
+import { useSettingsValue } from "../contexts/settingContext"
+import { novelCellStyle } from "../styles/novelCellStyles"
+import PlainText from "./atoms/PlainText"
+import LabeledText from "./atoms/LabeledText"
+import { convStrDate2Formatted } from "../functions/commonFunctions"
 
 type Props = {
-  novel: DownloadedNovelInfo
+  novel: NovelInBookshelf
   onTap: () => void
 }
 
-const DownloadedNovelCell: React.FC<Props> = ({ novel }) => {
-  const dlDate = new CommonDate(novel.lastUpAt)
-  // const { primaryColor } = useContext(SettingContext)
+const DownloadedNovelCell: React.FC<Props> = ({ novel, onTap }) => {
+  const { borderColor, backgroundColor } = useSettingsValue()
 
   return (
-    <View
-      style={{
-        ...styles.container,
-        // backgroundColor: primaryColor
+    <Pressable
+      style={({ pressed }) => {
+        return {
+          ...novelCellStyle.container,
+          borderColor,
+          backgroundColor,
+          opacity: pressed ? 0.9 : 1,
+        }
       }}
+      onPress={onTap}
     >
-      <View style={styles.info}>
-        <Text style={styles.title}>{novel.title}</Text>
-        <Text>最終掲載: {dlDate.getByKanji}</Text>
+      <View style={novelCellStyle.info}>
+        <PlainText text={novel.title} styles={novelCellStyle.title} />
+
+        <View style={novelCellStyle.details}>
+          <LabeledText
+            label='最終投稿日'
+            text={convStrDate2Formatted(novel.general_lastup)}
+          />
+        </View>
       </View>
-    </View>
+    </Pressable>
   )
 }
 
-const styles = StyleSheet.create({
-  container: {
-    marginHorizontal: 10,
-    marginVertical: 4,
-    paddingHorizontal: 4,
-    paddingVertical: 8,
-    borderWidth: 0.4,
-    borderRadius: 8,
-  },
-  info: {},
-
-  title: {
-    fontSize: 16,
-    fontWeight: "bold",
-  },
-})
+const styles = StyleSheet.create({})
 
 export default DownloadedNovelCell

@@ -21,3 +21,13 @@ export type DownloadedNovelInfo = {
   isEnd: 0 | 1
   downloadedAt: number
 }
+
+/**
+ * 本棚に登録している小説
+ */
+export type NovelInBookshelf = {
+  ncode: string
+  title: string
+  addedAt: number
+  general_lastup: string
+}
