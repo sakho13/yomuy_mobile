@@ -1,5 +1,6 @@
 import {
   isColorText,
+  isNcode,
   parseDateFormatText,
   parseNum2Formatted,
   zeroOffset,
@@ -25,6 +26,16 @@ describe("共通関数", () => {
   test("[fail] isColorText", () => {
     const isColor = isColorText("#0fg00f")
     expect(isColor).toBe(false)
+  })
+
+  test("[success] isNcode 1", () => {
+    const result = isNcode("n0001a")
+    expect(result).toBe(true)
+  })
+
+  test("[fail] isNcode 1", () => {
+    const result = isNcode("a0001a")
+    expect(result).toBe(false)
   })
 
   test("[success] parseDateFormatText", () => {
