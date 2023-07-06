@@ -51,6 +51,7 @@ export function isColorText(text: string): text is string {
  * 9999-12-31 24:59:59 を 9999年12月31日 24時59分 形式に変換する
  */
 export function convStrDate2Formatted(dateStr: string) {
+  if (dateStr.length !== 19) return "unknown"
   const date = dateStr.split(" ")
   const [yyyy, mm, dd] = date[0].split("-")
   const [hh, mi, _ss] = date[1].split(":")

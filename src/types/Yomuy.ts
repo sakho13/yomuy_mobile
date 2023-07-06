@@ -29,4 +29,5 @@ export type NovelInBookshelf = {
   ncode: string
   title: string
   addedAt: number
+  general_lastup: string
 }

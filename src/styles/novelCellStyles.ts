@@ -8,4 +8,17 @@ export const novelCellStyle = StyleSheet.create({
     justifyContent: "space-between",
     paddingVertical: 4,
   },
+
+  info: {
+    paddingHorizontal: 4,
+  },
+
+  title: {
+    fontSize: 17,
+    fontWeight: "bold",
+  },
+
+  details: {
+    paddingHorizontal: 8,
+  },
 })

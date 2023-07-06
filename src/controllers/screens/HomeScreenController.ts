@@ -13,6 +13,7 @@ export const homeScreenController = () => {
           ncode: `${i}`,
           title: `title ${i}: こんなかんじでタイトルが入るよ`,
           addedAt: 99991231245959000,
+          general_lastup: "",
         } as NovelInBookshelf
       })
       setNovels([...fetched])
