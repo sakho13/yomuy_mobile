@@ -1,6 +1,7 @@
 import {
   isColorText,
   parseDateFormatText,
+  parseNum2Formatted,
   zeroOffset,
 } from "../../src/functions/commonFunctions"
 
@@ -35,5 +36,20 @@ describe("共通関数", () => {
     const date = parseDateFormatText("9999-12/31 24:59（改）")
     expect(date).not.toBe("9999/12/31 24:59")
     expect(date).toBe("")
+  })
+
+  test("[success] parseNum2Formatted 1", () => {
+    const str = parseNum2Formatted(99991231125959999)
+    expect(str).toBe("9999/12/31 12:59")
+  })
+
+  test("[success] parseNum2Formatted 2", () => {
+    const str = parseNum2Formatted(99990109125959999)
+    expect(str).toBe("9999/1/9 12:59")
+  })
+
+  test("[fail] parseNum2Formatted 1", () => {
+    const str = parseNum2Formatted(9999123112595999)
+    expect(str).toBe("unknown")
   })
 })
