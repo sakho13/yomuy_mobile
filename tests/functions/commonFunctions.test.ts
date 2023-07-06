@@ -33,6 +33,11 @@ describe("共通関数", () => {
     expect(result).toBe(true)
   })
 
+  test("[success] isNcode 2", () => {
+    const result = isNcode("N0001a")
+    expect(result).toBe(true)
+  })
+
   test("[fail] isNcode 1", () => {
     const result = isNcode("a0001a")
     expect(result).toBe(false)
