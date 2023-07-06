@@ -51,7 +51,7 @@ export function isColorText(text: string): text is string {
  * 受け取ったテキストがNコードの形式である
  */
 export function isNcode(text: string): boolean {
-  return text[0] === "n"
+  return text[0] === "n" || text[0] === "N"
 }
 
 /**

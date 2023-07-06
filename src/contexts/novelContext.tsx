@@ -8,6 +8,7 @@ import {
 import { useNavigation } from "@react-navigation/native"
 import { NativeStackNavigationProp } from "@react-navigation/native-stack"
 import { StackNavigationTypes } from "../types/NavigationTypes"
+import { isNcode } from "../functions/commonFunctions"
 
 export const ncodeContext = createContext<string>("")
 export const setNcodeContext = createContext<Dispatch<SetStateAction<string>>>(
@@ -35,6 +36,7 @@ export const NovelContext: React.FC<{ children: React.ReactNode }> = ({
 
   const changeNcode = (value: SetStateAction<string>) => {
     const newNcode = value as string
+    if (!isNcode(newNcode)) return
 
     setNcode(newNcode)
     navigation.navigate("EpisodeListScreen", {})
