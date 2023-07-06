@@ -48,6 +48,13 @@ export function isColorText(text: string): text is string {
 }
 
 /**
+ * 受け取ったテキストがNコードの形式である
+ */
+export function isNcode(text: string): boolean {
+  return text[0] === "n"
+}
+
+/**
  * 9999-12-31 24:59:59 を 9999年12月31日 24時59分 形式に変換する
  */
 export function convStrDate2Formatted(dateStr: string) {
