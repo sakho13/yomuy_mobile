@@ -2,11 +2,14 @@ import { useState } from "react"
 import { useFocusEffect } from "@react-navigation/native"
 import { NovelInBookshelf } from "../../types/Yomuy"
 import React from "react"
+import { Linking } from "react-native"
 
 export const homeScreenController = () => {
   const [novels, setNovels] = useState<NovelInBookshelf[]>([])
 
   const [loading, setLoading] = useState(true)
+
+  const [actionNcode, setActionNcode] = useState<string | null>(null)
 
   useFocusEffect(
     React.useCallback(() => {
@@ -43,10 +46,39 @@ export const homeScreenController = () => {
     setLoading(false)
   }
 
+  /**
+   * ブラウザで開く
+   */
+  const openNovelInBrowser = () => {
+    if (actionNcode === null) return
+    Linking.openURL(`https://ncode.syosetu.com/${actionNcode}`)
+  }
+
+  /**
+   * 小説を本棚から削除
+   */
+  const removeNovel = () => {
+    if (actionNcode === null) return
+
+    setNovels(novels.filter((n) => n.ncode !== actionNcode))
+
+    // DBのUPDATE
+
+    closeNovelActionModal()
+  }
+
+  const openNovelActionModal = (ncode: string) => setActionNcode(ncode)
+  const closeNovelActionModal = () => setActionNcode(null)
+
   return {
     novels,
     loading,
+    actionNcode,
 
     novelUpdate,
+    openNovelInBrowser,
+    removeNovel,
+    openNovelActionModal,
+    closeNovelActionModal,
   }
 }

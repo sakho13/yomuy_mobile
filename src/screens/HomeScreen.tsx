@@ -14,10 +14,20 @@ import PlainText from "../components/atoms/PlainText"
 import { useSettingsValue } from "../contexts/settingContext"
 import { parseNum2Formatted } from "../functions/commonFunctions"
 import { useNcodeSet } from "../contexts/novelContext"
+import BaseModal from "../components/BaseModal"
 
 const HomeScreen: React.FC<HomeScreenProps> = ({}) => {
   const { secondaryColor, textColor, downloadedAt } = useSettingsValue()
-  const { novels, loading, novelUpdate } = homeScreenController()
+  const {
+    novels,
+    loading,
+    actionNcode,
+    novelUpdate,
+    openNovelInBrowser,
+    removeNovel,
+    openNovelActionModal,
+    closeNovelActionModal,
+  } = homeScreenController()
 
   const setNcode = useNcodeSet()
 
@@ -39,6 +49,7 @@ const HomeScreen: React.FC<HomeScreenProps> = ({}) => {
             onTap={() => {
               setNcode(novel.ncode)
             }}
+            onTapRBtn={() => openNovelActionModal(novel.ncode)}
           />
         )}
       />
@@ -66,6 +77,20 @@ const HomeScreen: React.FC<HomeScreenProps> = ({}) => {
           <PlainText text={`本棚: ${novels.length} 冊`} />
         </View>
       </View>
+
+      {/* NovelActionModal */}
+      <BaseModal
+        isVisible={actionNcode !== null}
+        head={`小説を操作 ${actionNcode}`}
+        onClose={closeNovelActionModal}
+      >
+        <Pressable style={styles.naModalRow} onPress={openNovelInBrowser}>
+          <PlainText text='ブラウザで開く' styles={styles.naModalLabel} />
+        </Pressable>
+        <Pressable style={styles.naModalRow} onPress={removeNovel}>
+          <PlainText text='本棚から削除' styles={styles.naModalLabel} />
+        </Pressable>
+      </BaseModal>
     </ScreenWrapper>
   )
 }
@@ -83,6 +108,14 @@ const styles = StyleSheet.create({
   updateBtn: {
     padding: 12,
     borderRadius: 40,
+  },
+
+  naModalRow: {
+    marginVertical: 4,
+    marginHorizontal: 8,
+  },
+  naModalLabel: {
+    fontSize: 20,
   },
 })
 
