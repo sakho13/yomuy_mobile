@@ -1,9 +1,16 @@
 import { useState } from "react"
 import { NarouApiController } from "../NarouApiController"
 import { NarouAPIInput, NarouAPINovelPart } from "../../types/Narou"
+import { supabase } from "../../utilities/supabase"
+import { CommonDate } from "../../classes/CommonDate"
+import { showError } from "../../functions/errorDialog"
+import { useAuthValue } from "../../contexts/authContext"
 
 export const searchScreenController = () => {
   const [isFetching, setIsFetching] = useState(false)
+  const [adding, setAdding] = useState(false)
+
+  const { user } = useAuthValue()
 
   const [listMessage, setListMessage] = useState<
     "件数は0件です" | "検索してください"
@@ -87,13 +94,39 @@ export const searchScreenController = () => {
   /**
    * 小説詳細モーダルを閉じる
    */
-  const closeNovelDetailModal = () => setSelectedIndex(null)
+  const closeNovelDetailModal = () => {
+    if (adding) return
+    setSelectedIndex(null)
+  }
 
   /**
    * 本棚に登録する
    */
-  const addBookShelf = (novel: NarouAPINovelPart) => {
-    console.log(novel)
+  const addBookShelf = async (novel: NarouAPINovelPart) => {
+    if (!user) return
+
+    setAdding(true)
+    console.log("> add", novel.ncode)
+    const now = new CommonDate()
+    try {
+      const { data, error } = await supabase.from("bookshelf").insert([
+        {
+          own: user.id,
+          ncode: novel.ncode,
+          added_at: now.getByNumber,
+        },
+      ])
+      console.log(data, error)
+    } catch (error) {
+      showError(
+        "本棚への保存に失敗",
+        user
+          ? "本棚への保存に失敗しました。"
+          : "本棚へ保存するためにはアカウント登録が必須になります。",
+      )
+    } finally {
+      setAdding(false)
+    }
   }
 
   /**

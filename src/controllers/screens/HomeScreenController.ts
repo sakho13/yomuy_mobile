@@ -4,6 +4,7 @@ import { NovelDetail, NovelInBookshelf } from "../../types/Yomuy"
 import React from "react"
 import { useAuthValue } from "../../contexts/authContext"
 import { supabase } from "../../utilities/supabase"
+import { showError } from "../../functions/errorDialog"
 
 export const homeScreenController = () => {
   const [loading, setLoading] = useState(false)
@@ -23,7 +24,7 @@ export const homeScreenController = () => {
   )
 
   const fetchNovels = async () => {
-    console.log("fetchNovels")
+    console.log("fetchNovels", loading)
     if (loading) return
     setLoading(true)
 
@@ -53,14 +54,23 @@ export const homeScreenController = () => {
   const fetchBookshelf = async (): Promise<NovelInBookshelf[]> => {
     if (user === null) return []
 
-    const { data, error } = await supabase.from("bookshelf").select("*")
+    try {
+      const { data } = await supabase.from("bookshelf").select("*")
+      if (data === null) {
+        showError("本棚の取得に失敗", "")
+        return []
+      }
 
-    return [...Array(10)].map((_, i) => {
-      return {
-        ncode: `${i}`,
-        addedAt: 99991231245959000,
-      } as NovelInBookshelf
-    })
+      return data.map(({ ncode, added_at, own }, i) => {
+        return {
+          ncode: ncode,
+          addedAt: added_at,
+        } as NovelInBookshelf
+      })
+    } catch (error) {
+      showError("本棚の取得に失敗", "")
+      return []
+    }
   }
 
   /**

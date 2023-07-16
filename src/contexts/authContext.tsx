@@ -22,11 +22,11 @@ const AuthContext: React.FC<{
   const [token, setToken] = useState<string | null>(null)
 
   useEffect(() => {
-    const session = supabase.auth.getSession()
+    const _ = supabase.auth.getSession()
 
     const { data: authListener } = supabase.auth.onAuthStateChange(
       async (event, session) => {
-        console.log("> onAuthStateChange", event, session)
+        console.log("> onAuthStateChange", event, session?.user.id)
         if (session && session.user && session.access_token) {
           setUser(session.user)
           setToken(session.access_token)
@@ -41,7 +41,7 @@ const AuthContext: React.FC<{
 
   useEffect(() => {
     const checkTokenExpiration = () => {
-      console.log("> checkTokenExpiration", user, token)
+      console.log("> checkTokenExpiration", user?.id, token)
       if (user && token) {
         const decodedToken: { exp?: number } = jwtDecode(token)
         const currentTime = Math.floor(Date.now() / 1000)
