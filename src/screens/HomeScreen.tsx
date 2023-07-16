@@ -5,9 +5,13 @@ import NovelCell from "../components/NovelCell"
 import FaIcon from "../components/atoms/FaIcon"
 import ScreenWrapper from "../components/atoms/ScreenWrapper"
 import PlainText from "../components/atoms/PlainText"
+import LoginForm from "../components/LoginForm"
+import { useAuthValue } from "../contexts/authContext"
 
 const HomeScreen: React.FC<HomeScreenProps> = ({}) => {
   const { novels, novelUpdate } = homeScreenController()
+
+  if (useAuthValue().user === null) return <LoginForm />
 
   return (
     <ScreenWrapper>
