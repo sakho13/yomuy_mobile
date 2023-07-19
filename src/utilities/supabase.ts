@@ -2,8 +2,9 @@ import "react-native-url-polyfill/auto"
 import { createClient } from "@supabase/supabase-js"
 import { getItemAsync, setItemAsync, deleteItemAsync } from "expo-secure-store"
 import { Constants } from "../statics/constants"
+import { Database } from "../../supabase/schema"
 
-export const supabase = createClient(
+export const supabase = createClient<Database>(
   Constants.SUPABASE_URL,
   Constants.SUPABASE_KEY,
   {
