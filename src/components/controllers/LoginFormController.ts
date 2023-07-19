@@ -3,10 +3,10 @@ import { Alert } from "react-native"
 import { supabase } from "../../utilities/supabase"
 
 export const loginFormController = () => {
-  const [email, setEmail] = useState("wecl.khotaro@gmail.com")
+  const [email, setEmail] = useState("")
 
-  const [password, setPassword] = useState("password")
-  const [verifyPassword, setVerifyPassword] = useState("password")
+  const [password, setPassword] = useState("")
+  const [verifyPassword, setVerifyPassword] = useState("")
 
   useEffect(() => {
     return () => {
