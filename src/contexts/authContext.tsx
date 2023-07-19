@@ -30,6 +30,9 @@ const AuthContext: React.FC<{
         if (session && session.user && session.access_token) {
           setUser(session.user)
           setToken(session.access_token)
+        } else {
+          setUser(null)
+          setToken(null)
         }
       },
     )
