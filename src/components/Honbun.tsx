@@ -15,11 +15,12 @@ const Honbun: React.FC<Props> = ({ honbun }) => {
       #honbun {
         margin-left: 16px;
         margin-right: 16px;
-        color: ${textColor}
+        color: ${textColor};
       }
 
       #honbun > p {
         font-size: 2.5rem;
+        color: ${textColor};
       }
     </style>
     <div id="honbun">${honbun}</div>
