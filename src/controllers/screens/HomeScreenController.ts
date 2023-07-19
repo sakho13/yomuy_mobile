@@ -18,6 +18,7 @@ export const homeScreenController = () => {
         setLoading(false)
       })
       return () => {
+        setNovels([])
         setLoading(false)
       }
     }, []),
@@ -64,8 +65,9 @@ export const homeScreenController = () => {
   /**
    * 本棚に追加した小説の更新を確認する
    */
-  const novelUpdate = () => {
-    // タイトルやストーリーなど
+  const novelUpdate = async () => {
+    setLoading(false)
+    await fetchNovels()
   }
 
   return {
