@@ -3,8 +3,9 @@ import { NarouApiController } from "../NarouApiController"
 import { NarouAPIInput, NarouAPINovelPart } from "../../types/Narou"
 import { supabase } from "../../utilities/supabase"
 import { CommonDate } from "../../classes/CommonDate"
-import { showError } from "../../functions/errorDialog"
+import { showLogicError } from "../../functions/errorDialog"
 import { useAuthValue } from "../../contexts/authContext"
+import { LogicError } from "../../error/logicError"
 
 export const searchScreenController = () => {
   const [isFetching, setIsFetching] = useState(false)
@@ -103,10 +104,12 @@ export const searchScreenController = () => {
    * 本棚に登録する
    */
   const addBookShelf = async (novel: NarouAPINovelPart) => {
-    if (!user) return
+    if (!user) {
+      showLogicError(new LogicError("RequiredSigned"))
+      return
+    }
 
     setAdding(true)
-    console.log("> add", novel.ncode)
     const now = new CommonDate()
     try {
       const { data, error } = await supabase.from("bookshelf").insert([
@@ -116,14 +119,9 @@ export const searchScreenController = () => {
           added_at: now.getByNumber,
         },
       ])
-      console.log(data, error)
+      if (error !== null) throw new LogicError("RegisterToBookshelf")
     } catch (error) {
-      showError(
-        "本棚への保存に失敗",
-        user
-          ? "本棚への保存に失敗しました。"
-          : "本棚へ保存するためにはアカウント登録が必須になります。",
-      )
+      showLogicError(error)
     } finally {
       setAdding(false)
     }

@@ -1,8 +1,9 @@
 const logicErrorCode = [
   "Unknown",
-  // 1~100 認証
+  // Authentication
   "Unsigned",
-  // 101~200 DBアクセス
+  "RequiredSigned",
+  // DB access
   "FetchBookshelf",
   "RegisterToBookshelf",
 ] as const
@@ -22,6 +23,12 @@ const LogicErrorMap: {
   Unsigned: {
     title: "未サインインエラー",
     message: "",
+  },
+  RequiredSigned: {
+    title: "サインイン必須エラー",
+    message:
+      `この機能にはサインインが必須です。\n` +
+      `本棚画面よりサインインしてください。`,
   },
   FetchBookshelf: {
     title: "本棚情報の取得エラー",
