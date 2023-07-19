@@ -104,7 +104,10 @@ const SearchScreen: React.FC<SettingScreenProps> = () => {
               setNcode(novels[selectedIndex].ncode)
               closeNovelDetailModal()
             }}
-            onTapAdd={() => addBookShelf(novels[selectedIndex])}
+            onTapAdd={() => {
+              addBookShelf(novels[selectedIndex])
+              closeNovelDetailModal()
+            }}
           />
         ) : (
           <View>
