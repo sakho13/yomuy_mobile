@@ -5,16 +5,29 @@ import NovelCell from "../components/NovelCell"
 import FaIcon from "../components/atoms/FaIcon"
 import ScreenWrapper from "../components/atoms/ScreenWrapper"
 import PlainText from "../components/atoms/PlainText"
+import LoginForm from "../components/LoginForm"
+import { useAuthValue } from "../contexts/authContext"
+import { useNcodeSet } from "../contexts/novelContext"
 
 const HomeScreen: React.FC<HomeScreenProps> = ({}) => {
   const { novels, novelUpdate } = homeScreenController()
+
+  const setNcode = useNcodeSet()
+
+  if (useAuthValue().user === null) return <LoginForm />
 
   return (
     <ScreenWrapper>
       <FlatList
         data={novels}
         renderItem={({ item: novel }) => (
-          <NovelCell key={novel.ncode} novel={novel} onTap={() => {}} />
+          <NovelCell
+            key={novel.ncode}
+            novel={novel}
+            onTap={() => {
+              setNcode(novel.ncode)
+            }}
+          />
         )}
       />
 

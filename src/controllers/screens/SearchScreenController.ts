@@ -1,9 +1,16 @@
 import { useState } from "react"
 import { NarouApiController } from "../NarouApiController"
 import { NarouAPIInput, NarouAPINovelPart } from "../../types/Narou"
+import { showLogicError } from "../../functions/errorDialog"
+import { useAuthValue } from "../../contexts/authContext"
+import { LogicError } from "../../error/logicError"
+import { DBUtility } from "../../utilities/DBUtility"
 
 export const searchScreenController = () => {
   const [isFetching, setIsFetching] = useState(false)
+  const [adding, setAdding] = useState(false)
+
+  const { user } = useAuthValue()
 
   const [listMessage, setListMessage] = useState<
     "件数は0件です" | "検索してください"
@@ -87,13 +94,28 @@ export const searchScreenController = () => {
   /**
    * 小説詳細モーダルを閉じる
    */
-  const closeNovelDetailModal = () => setSelectedIndex(null)
+  const closeNovelDetailModal = () => {
+    if (adding) return
+    setSelectedIndex(null)
+  }
 
   /**
    * 本棚に登録する
    */
-  const addBookShelf = (novel: NarouAPINovelPart) => {
-    console.log(novel)
+  const addBookShelf = async (novel: NarouAPINovelPart) => {
+    if (!user) {
+      showLogicError(new LogicError("RequiredSigned"))
+      return
+    }
+
+    setAdding(true)
+    try {
+      await DBUtility.registerBookshelf(user.id, novel.ncode)
+    } catch (error) {
+      showLogicError(error)
+    } finally {
+      setAdding(false)
+    }
   }
 
   /**

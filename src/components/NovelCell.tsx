@@ -1,13 +1,12 @@
-import { Pressable, StyleSheet, Text, View } from "react-native"
-import { NovelInBookshelf } from "../types/Yomuy"
+import { Pressable, StyleSheet, View } from "react-native"
+import { NovelDetail } from "../types/Yomuy"
 import { useSettingsValue } from "../contexts/settingContext"
 import { novelCellStyle } from "../styles/novelCellStyles"
 import PlainText from "./atoms/PlainText"
 import LabeledText from "./atoms/LabeledText"
-import { convStrDate2Formatted } from "../functions/commonFunctions"
 
 type Props = {
-  novel: NovelInBookshelf
+  novel: NovelDetail
   onTap: () => void
 }
 
@@ -30,10 +29,7 @@ const DownloadedNovelCell: React.FC<Props> = ({ novel, onTap }) => {
         <PlainText text={novel.title} styles={novelCellStyle.title} />
 
         <View style={novelCellStyle.details}>
-          <LabeledText
-            label='最終投稿日'
-            text={convStrDate2Formatted(novel.general_lastup)}
-          />
+          <LabeledText label='最終投稿日' text={`${novel.lastUpAt}`} />
         </View>
       </View>
     </Pressable>

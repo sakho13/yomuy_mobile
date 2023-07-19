@@ -27,7 +27,8 @@ export type DownloadedNovelInfo = {
  */
 export type NovelInBookshelf = {
   ncode: string
-  title: string
+  /** 本棚に追加した日時 99991231245959000 */
   addedAt: number
-  general_lastup: string
 }
+
+export type NovelDetail = DownloadedNovelInfo & NovelInBookshelf

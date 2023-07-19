@@ -14,17 +14,20 @@ import { SettingContext, useSettingsValue } from "./src/contexts/settingContext"
 import { NovelContext } from "./src/contexts/novelContext"
 import EpisodeListScreen from "./src/screens/EpisodeListScreen"
 import EpisodeScreen from "./src/screens/EpisodeScreen"
+import AuthContext from "./src/contexts/authContext"
 
 const Drawer = createDrawerNavigator<DrawerNavigationTypes>()
 const Stack = createNativeStackNavigator<StackNavigationTypes>()
 
 const AppWrapper: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   return (
-    <SettingContext>
-      <NavigationContainer>
-        <NovelContext>{children}</NovelContext>
-      </NavigationContainer>
-    </SettingContext>
+    <AuthContext>
+      <SettingContext>
+        <NavigationContainer>
+          <NovelContext>{children}</NovelContext>
+        </NavigationContainer>
+      </SettingContext>
+    </AuthContext>
   )
 }
 
@@ -33,7 +36,7 @@ const Index: React.FC = () => {
 
   return (
     <Drawer.Navigator
-      initialRouteName='SearchScreen'
+      initialRouteName='HomeScreen'
       screenOptions={{
         headerStyle: {
           backgroundColor: secondaryColor,
