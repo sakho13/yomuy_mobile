@@ -14,6 +14,7 @@ import ScreenWrapper from "../components/atoms/ScreenWrapper"
 import { useSettingsValue } from "../contexts/settingContext"
 import BaseModal from "../components/BaseModal"
 import PlainTextButton from "../components/PlainTextButton"
+import { useAuthValue } from "../contexts/authContext"
 
 const SettingScreen: React.FC<SettingScreenProps> = ({}) => {
   const {
@@ -25,7 +26,10 @@ const SettingScreen: React.FC<SettingScreenProps> = ({}) => {
     openContactForm,
     openAboutModal,
     closeAboutModal,
+    signOut,
   } = SettingScreenController()
+
+  const { user } = useAuthValue()
 
   const { primaryColor, borderColor } = useSettingsValue()
 
@@ -53,6 +57,25 @@ const SettingScreen: React.FC<SettingScreenProps> = ({}) => {
           </View>
 
           <View style={{ ...styles.divider, borderColor }} />
+
+          {user !== null ? (
+            <>
+              <Pressable style={styles.row} onPress={signOut}>
+                <PlainText text='ログアウト' styles={styles.label} />
+              </Pressable>
+
+              <View style={{ ...styles.divider, borderColor }} />
+
+              <Pressable style={styles.row} onPress={() => {}}>
+                <PlainText
+                  text='アカウントを削除'
+                  styles={{ ...styles.label, color: "#D84040" }}
+                />
+              </Pressable>
+
+              <View style={{ ...styles.divider, borderColor }} />
+            </>
+          ) : null}
 
           <Pressable
             style={{
