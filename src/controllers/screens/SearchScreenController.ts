@@ -1,11 +1,10 @@
 import { useState } from "react"
 import { NarouApiController } from "../NarouApiController"
 import { NarouAPIInput, NarouAPINovelPart } from "../../types/Narou"
-import { supabase } from "../../utilities/supabase"
-import { CommonDate } from "../../classes/CommonDate"
 import { showLogicError } from "../../functions/errorDialog"
 import { useAuthValue } from "../../contexts/authContext"
 import { LogicError } from "../../error/logicError"
+import { DBUtility } from "../../utilities/DBUtility"
 
 export const searchScreenController = () => {
   const [isFetching, setIsFetching] = useState(false)
@@ -110,16 +109,8 @@ export const searchScreenController = () => {
     }
 
     setAdding(true)
-    const now = new CommonDate()
     try {
-      const { data, error } = await supabase.from("bookshelf").insert([
-        {
-          own: user.id,
-          ncode: novel.ncode,
-          added_at: now.getByNumber,
-        },
-      ])
-      if (error !== null) throw new LogicError("RegisterToBookshelf")
+      await DBUtility.registerBookshelf(user.id, novel.ncode)
     } catch (error) {
       showLogicError(error)
     } finally {
