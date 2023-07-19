@@ -3,8 +3,8 @@ import { useFocusEffect } from "@react-navigation/native"
 import { NovelDetail, NovelInBookshelf } from "../../types/Yomuy"
 import React from "react"
 import { useAuthValue } from "../../contexts/authContext"
-import { supabase } from "../../utilities/supabase"
-import { showError } from "../../functions/errorDialog"
+import { showLogicError } from "../../functions/errorDialog"
+import { DBUtility } from "../../utilities/DBUtility"
 
 export const homeScreenController = () => {
   const [loading, setLoading] = useState(false)
@@ -24,7 +24,6 @@ export const homeScreenController = () => {
   )
 
   const fetchNovels = async () => {
-    console.log("fetchNovels", loading)
     if (loading) return
     setLoading(true)
 
@@ -55,20 +54,9 @@ export const homeScreenController = () => {
     if (user === null) return []
 
     try {
-      const { data } = await supabase.from("bookshelf").select("*")
-      if (data === null) {
-        showError("本棚の取得に失敗", "")
-        return []
-      }
-
-      return data.map(({ ncode, added_at, own }, i) => {
-        return {
-          ncode: ncode,
-          addedAt: added_at,
-        } as NovelInBookshelf
-      })
+      return await DBUtility.fetchBookshelf()
     } catch (error) {
-      showError("本棚の取得に失敗", "")
+      showLogicError(error)
       return []
     }
   }
