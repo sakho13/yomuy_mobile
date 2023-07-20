@@ -21,6 +21,7 @@ const EpisodeListScreen: React.FC = () => {
     reset,
     openWithBrowser,
     setOpeningDetailModal,
+    addBookShelf,
   } = episodeListScreenController()
 
   useEffect(() => {
@@ -79,7 +80,7 @@ const EpisodeListScreen: React.FC = () => {
           <PlainText text='ブラウザで開く' styles={styles.modalLabelText} />
         </Pressable>
 
-        <Pressable onPress={() => {}} style={styles.modalLabel}>
+        <Pressable onPress={addBookShelf} style={styles.modalLabel}>
           <PlainText text='本棚へ追加' styles={styles.modalLabelText} />
         </Pressable>
       </BaseModal>
