@@ -15,6 +15,7 @@ export const EpisodeScreenController = () => {
   const setEpisode = useEpisodeSet()
 
   const [honbun, setHonbun] = useState("")
+  const [subtitle, setSubtitle] = useState("")
 
   const [loading, setLoading] = useState(false)
 
@@ -51,8 +52,10 @@ export const EpisodeScreenController = () => {
 
     const parser = new HTMLParser(res.data)
     const honbun = parser.parseHonbun()
+    const subtitle = parser.parseSubtitle()
 
     if (honbun !== null) setHonbun(honbun)
+    if (subtitle !== null) setSubtitle(subtitle)
 
     setLoading(false)
   }
@@ -69,9 +72,9 @@ export const EpisodeScreenController = () => {
   }
 
   return {
+    subtitle,
     honbun,
     loading,
-    episode,
 
     onSwipe,
   }

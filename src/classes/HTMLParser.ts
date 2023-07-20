@@ -64,4 +64,10 @@ export class HTMLParser {
     if (honbunPart.length === 0) return null
     return honbunPart.html()
   }
+
+  public parseSubtitle() {
+    const subtitlePart = this.html(".novel_subtitle")
+    if (subtitlePart.length === 0) return null
+    return subtitlePart.text()
+  }
 }

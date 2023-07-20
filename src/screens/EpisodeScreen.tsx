@@ -6,7 +6,7 @@ import { useSettingsValue } from "../contexts/settingContext"
 import PlainText from "../components/atoms/PlainText"
 
 const EpisodeScreen: React.FC = () => {
-  const { honbun, loading, episode, onSwipe } = EpisodeScreenController()
+  const { subtitle, honbun, loading, onSwipe } = EpisodeScreenController()
 
   const { backgroundColor, borderColor } = useSettingsValue()
 
@@ -29,10 +29,13 @@ const EpisodeScreen: React.FC = () => {
           borderBottomWidth: 1,
           borderColor,
           paddingVertical: 8,
-          paddingHorizontal: 4,
+          paddingHorizontal: 8,
         }}
       >
-        <PlainText text={`${episode}`} />
+        <PlainText
+          text={`${subtitle}`}
+          styles={{ maxWidth: "100%", overflow: "hidden" }}
+        />
       </View>
 
       <Honbun honbun={honbun} />
