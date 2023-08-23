@@ -56,26 +56,25 @@ export const EpisodeScreenController = () => {
 
     if (honbun !== null) setHonbun(honbun)
     if (subtitle !== null) setSubtitle(subtitle)
-
-    setLoading(false)
   }
 
-  const onSwipe = (direction: "left" | "right") => {
-    if (direction === "left") {
+  const jumpEpisode = (direction: "prev" | "next") => {
+    if (direction === "prev") {
       if (episode === 1) return
-      console.log("go left")
       setEpisode(episode - 1)
     } else {
-      console.log("go right")
       setEpisode(episode + 1)
     }
   }
+
+  const honbunLoaded = () => setLoading(false)
 
   return {
     subtitle,
     honbun,
     loading,
 
-    onSwipe,
+    jumpEpisode,
+    honbunLoaded,
   }
 }
