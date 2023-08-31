@@ -6,7 +6,7 @@ import { useSettingsValue } from "../contexts/settingContext"
 import PlainText from "../components/atoms/PlainText"
 
 const EpisodeScreen: React.FC = () => {
-  const { subtitle, honbun, loading, onSwipe } = EpisodeScreenController()
+  const { subtitle, honbun, loading, jumpEpisode } = EpisodeScreenController()
 
   const { backgroundColor, borderColor } = useSettingsValue()
 
