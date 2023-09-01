@@ -1,4 +1,3 @@
-import Axios from "axios"
 import { useFocusEffect } from "@react-navigation/native"
 import React, { useEffect } from "react"
 import { HTMLParser } from "../../classes/HTMLParser"
@@ -8,6 +7,7 @@ import {
   useNcodeValue,
 } from "../../contexts/novelContext"
 import { useState } from "react"
+import { NarouWebApiUtility } from "../../utilities/NarouWebApiUtility"
 
 export const EpisodeScreenController = () => {
   const ncode = useNcodeValue()
@@ -46,11 +46,13 @@ export const EpisodeScreenController = () => {
 
     setLoading(true)
 
-    const res = await Axios.get<string>(
-      `https://ncode.syosetu.com/${ncode}/${episode}`,
-    )
+    const res = await NarouWebApiUtility.getSyosetuPart(ncode, episode)
+    if (res === null) {
+      setSubtitle("小説の取得に失敗")
+      return
+    }
 
-    const parser = new HTMLParser(res.data)
+    const parser = new HTMLParser(res)
     const honbun = parser.parseHonbun()
     const subtitle = parser.parseSubtitle()
 

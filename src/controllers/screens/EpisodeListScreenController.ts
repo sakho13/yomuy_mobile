@@ -1,13 +1,13 @@
 import { useState } from "react"
-import Axios from "axios"
 import { useNcodeValue } from "../../contexts/novelContext"
-import { NarouAPINovelPart, NovelEpisode } from "../../types/Narou"
+import { NovelEpisode } from "../../types/Narou"
 import { HTMLParser } from "../../classes/HTMLParser"
 import { Linking } from "react-native"
 import { LogicError } from "../../error/logicError"
 import { showLogicError } from "../../functions/errorDialog"
 import { DBUtility } from "../../utilities/DBUtility"
 import { useAuthValue } from "../../contexts/authContext"
+import { NarouWebApiUtility } from "../../utilities/NarouWebApiUtility"
 
 export const episodeListScreenController = () => {
   const ncode = useNcodeValue()
@@ -40,9 +40,10 @@ export const episodeListScreenController = () => {
     }
 
     try {
-      const res = await Axios.get<string>(`https://ncode.syosetu.com/${ncode}`)
+      const res = await NarouWebApiUtility.getSyosetuTop(ncode)
+      if (res === null) throw new Error("fetch error")
 
-      const parser = new HTMLParser(res.data)
+      const parser = new HTMLParser(res)
 
       const honbun = parser.parseHonbun()
 
